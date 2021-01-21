@@ -1,0 +1,27 @@
+/*
+
+Color pallete
+https://coolors.co/292f3d-d64933-1c7363-01baef-fbfbff
+
+*/
+
+
+body {
+    background-color: #292F3D;
+    margin: 0;
+    color: white;
+    font-size: larger;
+}
+
+header {
+    background-color: #D64933;
+    padding: 10pt;
+}
+
+.panel {
+    background-color: #1C7363;
+    width: 90%;
+    margin: 20pt auto;
+    padding: 5pt;
+    min-height: 120pt;
+}
