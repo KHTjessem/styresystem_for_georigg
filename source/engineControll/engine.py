@@ -1,7 +1,7 @@
 
+# TODO: lacks required properties
 class engine:
     def __init__(self):
-        self.__connected = False
-        self.__status = "offline"
+        self.MODULE_ADDRESS = 1
     
     
