@@ -1,1 +1,2 @@
-# Stryring av motor skjer her
+# Stryring av motor skjer 
+# mindre postion --> midre hashtighet. 

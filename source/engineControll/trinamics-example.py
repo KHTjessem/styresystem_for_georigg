@@ -21,7 +21,7 @@ PyTrinamic.showInfo()
 
 connectionManager = ConnectionManager()
 myInterface = connectionManager.connect()
-Module_1161 = TMCM_1161(myInterface)
+a = TMCM_1161(myInterface)
 
 DEFAULT_MOTOR = 0
 
