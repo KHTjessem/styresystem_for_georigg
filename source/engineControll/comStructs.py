@@ -28,9 +28,13 @@ class command:
 
 
 class reply:
-    def __init__(self, reply_address, module_address, status, value, checksum):
+    def __init__(self, reply_address, module_address, status, command_number, value, checksum):
         self.reply_address = reply_address
         self.module_address = module_address
         self.status = status
+        self.command_number = command_number
         self.value = value #4 bytes
         self.checksum = checksum
+    
+    def test(self):
+        struct.unpack('>BBBBiB')
