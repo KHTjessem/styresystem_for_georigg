@@ -25,6 +25,7 @@ header {
     margin: 20pt auto;
     padding: 5pt;
     min-height: 120pt;
+    display: block;
 }
 
 .buttons{

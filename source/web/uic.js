@@ -1,12 +1,22 @@
+var controlStatus = document.getElementById("status-panel")
+var Graph = document.getElementById("Graph")
+var controlPanel = document.getElementById("control-panel")
 
-
-function hide() {
-    var controlPanel = document.getElementById("status-controll-panel")
-    if (controlPanel.style.display !== "none"){
-        controlPanel.style.display = "none"
+function hideStatus() {
+    if (controlStatus.style.display=== "none"){
+        controlStatus.style.display = "block";
+        controlPanel.style.display = "block";
+        Graph.style.display = "none";
+        
+        
     }
     else {
-    controlPanel.style.display = "block";
+    controlStatus.style.display = "none";
+    controlPanel.style.display = "none";
+    Graph.style.display = "block";
+    
 
     }
-}
+
+}  
+

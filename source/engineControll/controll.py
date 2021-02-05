@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Stryring av motor skjer 
-# mindre postion --> midre hashtighet. 
-=======
 import comSerial
 from comStructs import command
 
@@ -32,4 +28,3 @@ if __name__ == "__main__":
     c.rotate_left()
     c.stop()
     c.close()
->>>>>>> 67c91aaf1199c8cc1270d948062d0a66fe16eac8
