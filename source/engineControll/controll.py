@@ -32,11 +32,3 @@ class controll:
 
     def close(self):
         self.__connection.close()
-
-
-if __name__ == "__main__":
-    c = controll()
-    c.rotate_left(50)
-    c.stop()
-    c.getActualPosition()
-    c.close()
