@@ -37,9 +37,21 @@ header {
     justify-content: space-between;
 }
 
+#control-panel{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    
+}
+
 
 .rotationalButton{
-    float:center;
     display: flex;
     justify-content: space-between;
+}
+
+.sliderDiv{
+    display:flex;
+    flex-direction: column;
 }
