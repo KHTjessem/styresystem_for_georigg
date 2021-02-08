@@ -36,11 +36,7 @@ class controll:
 
 if __name__ == "__main__":
     c = controll()
-    c.rotate_left(50)
+    c.rotate_left(100)
     c.stop()
-<<<<<<< HEAD
-    c.close()
-=======
     c.getActualPosition()
     c.close()
->>>>>>> b264852bce1b7a064f8b9ed16de3a12fb6e3986b

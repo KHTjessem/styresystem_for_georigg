@@ -12,10 +12,10 @@
     <div class="buttons">
         <div class="buttonsLeft">
             <button onclick="hideStatus()">Status</button>
-            <button >Controll-panel</button>
+            <button onclick="hideStatus()">Controll-panel</button>
             <button onclick="hide()">Graph</button>
         </div>
-        <button class = "emergency" id= "emergency">Emergency</button>
+        <button id= "emergency">Emergency</button>
     </div>
 </header>
     
@@ -24,7 +24,16 @@
     </div>
     
     <div class="panel" id="control-panel">
-        control-pannel
+        <div class="sliderDiv">
+            <input type="range" min="0" max="100" value="50" class="slider" id="slider">
+            
+        </div>
+
+
+        <div class="rotationalButton">     
+            <button>Left rotate</button>
+            <button>Right rotate</button>
+        </div>
     </div>
     
     <div class="panel" id="Graph">

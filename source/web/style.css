@@ -27,6 +27,9 @@ header {
     min-height: 120pt;
     display: block;
 }
+#status-panel {
+    min-height: 50pt;
+}
 
 .buttons{
     float: center;
@@ -34,9 +37,9 @@ header {
     justify-content: space-between;
 }
 
-.buttonsRight {
-    float: right;
-    
 
-
+.rotationalButton{
+    float:center;
+    display: flex;
+    justify-content: space-between;
 }
