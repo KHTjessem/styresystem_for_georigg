@@ -45,4 +45,5 @@ class testing:
 if __name__ == "__main__":
  t = testing()
  t.start()
+ t.stop()
  t.close()
