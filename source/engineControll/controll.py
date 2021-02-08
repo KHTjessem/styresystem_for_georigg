@@ -1,5 +1,5 @@
-import comSerial
-from comStructs import command
+import engineControll.comSerial as comSerial
+from engineControll.comStructs import command
 
 # TODO: implement all controll commands.
 class controll:

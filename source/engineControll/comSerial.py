@@ -1,5 +1,5 @@
 import serial
-import comStructs
+import engineControll.comStructs as comStructs
 
 # TODO
 class connection:
