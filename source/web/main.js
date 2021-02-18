@@ -28,3 +28,4 @@ function stop (){
 }
 
 document.getElementById("stopButton").addEventListener('click', stop)
+document.getElementById("emergency").addEventListener('click', stop)

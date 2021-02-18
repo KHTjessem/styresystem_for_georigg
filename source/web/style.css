@@ -55,3 +55,18 @@ header {
     display:flex;
     flex-direction: column;
 }
+
+.slider::after{
+    content: "1000";
+    color: white;
+    position: absolute;
+    left: 93%;
+    top: 40%;
+}
+.slider::before{
+    content: "1";
+    position: absolute;
+    color: white;
+    right: 94%;
+    top: 40%;
+}
