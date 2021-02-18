@@ -27,8 +27,9 @@ class controll:
     def getActualPosition(self):
         GAP = command(1, 6, 1, 0, 0)
         s = self.__connection.write(GAP.getByteArray())
-        print("Position: " + str(int.from_bytes(s.value, 'big', signed=True)))
-        print(str(s.value))
+        #print("Position: " + str(int.from_bytes(s.value, 'big', signed=True)))
+        #print(str(s.value))
+        return int.from_bytes(s.value, 'big', signed=True)
 
     def close(self):
         self.__connection.close()
