@@ -2,12 +2,64 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Georigg</title>
     <link rel='stylesheet' type='text/css' media='screen' href='./style.css'>
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>
-    KOntent
+    
+    <header>
+        <div class="dropdown" style="float:left;">
+            <button class="status">Status</button>
+            <div class="dropdown-content" style="left:0;">
+              <a onclick="hideStatus()">Control-panel</a>
+              <a onclick="hide()">Graph</a>
+            </div>
+          </div>
+
+          <div class="dropdown" style="float:left;">
+            <button class="status">Angle</button>
+            <div class="dropdown-content" style="left:0;">
+              <a >30 Degrees</a>
+              <a >60 Degrees</a>
+              <a >90 Degrees</a>
+            </div>
+          </div>
+          
+        <div class="emBtn" >
+        <button class="dropdown" id= "emergency">Emergency-Stop</button>
+        </div>
+</header>
+
+    <div class="panel" id="statusSignal"> 
+
+        <div class="panel" id="status-panel">Status</div>
+       
+        <div class="signal">
+            <div class="light"> </div>
+        </div>
+</div>
+    
+    <div class="panel" id="control-panel">
+        <div class="sliderDiv">
+            <input type="text" min="1" max="1000"  class="input" id="input">
+            <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
+            
+        </div>
+        <div class="rotationalButton">     
+            <button id="leftButton">Left rotate</button>
+            <button id="stopButton">Stop</button>
+            <button id="rightButton">Right rotate</button>
+        </div>
+    </div>
+    
+    <div class="panel" id="Graph">
+        drawFunction
+        <button id="get_numb">Get numbs</button>
+        <div id="numb-test"></div>
+    </div>
+
 </body>
+<script src="./main.js"></script>
+<script src="./guiControl.js"></script>
 </html>
