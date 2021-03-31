@@ -10,7 +10,7 @@ class command:
         self.motor_bank = motor_bank
         self.value = value # 4Bytes
         self.checksum = None
-        self.calckChecksum()
+        calckChecksum(self)
     
     def getByteArray(self):
         #Byte Byte Byte Byte Integer(4 bytes) Byte
@@ -18,14 +18,17 @@ class command:
             self.module_address, self.command_number,
             self.type_number, self.motor_bank, self.value, self.checksum)
     
-    def calckChecksum(self):
-        arr = struct.pack('>BBBBi', self.module_address, self.command_number, 
-                        self.type_number, self.motor_bank, self.value)
-        csum = 0
-        for b in arr:
-            csum += int(b)
-        self.checksum = csum
+    def newValue(self, value):
+        self.value = value
+        self.calckChecksum() #update checksum
 
+def calckChecksum(obj):
+    arr = struct.pack('>BBBBi', obj.module_address, obj.command_number, 
+                    obj.type_number, obj.motor_bank, obj.value)
+    csum = 0
+    for b in arr:
+        csum += int(b)
+    obj.checksum = csum
 
 class reply:
     def __init__(self, reply_address, module_address, status, command_number, value, checksum):
