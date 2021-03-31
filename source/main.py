@@ -3,7 +3,7 @@ import sys
 
 import random
 
-from engineControll.controll import controll
+from controll import controll
 
 # Engine init
 cont = controll()
