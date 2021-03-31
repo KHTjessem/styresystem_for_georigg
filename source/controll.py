@@ -4,13 +4,15 @@ import commands as definedCommands
 import threading
 
 class controll:
-    def __init__(self):
+    def __init__(self, events):
         self.commands = definedCommands.commands()
         self.comdata = comData()
+        self.events = events
         #self.__connection = comSerial.connection('COM3')
         self.__con = comSerial.connection('COM3', self.comdata)
         self.__con.setDaemon(True)
         self.__con.start()
+        self.events['updStatusText'].trigger('Connected to engine.')
 
     # TODO: Might need a lock to make sure only one event at a time
     # Probebly not needed as this will all go in one thread, therefore 
@@ -19,16 +21,21 @@ class controll:
         self.comdata.newCommand(command)
         self.__con.newComEv.set()
         self.__con.replyReadyEv.wait() # Can set a timeout. TODO
-        self.__con.replyReadyEv.clear()
         #TODO: process the reply and send information to frontend.
+        self.handleReply()
+        self.__con.replyReadyEv.clear()
+    
+    def handleReply(self):
+        self.events['updStatusText'].trigger('Success')
+
 
     def rotate_right(self, velocity):
-        a = self.commands.ROR.newValue(velocity)
-        self.runCommand(a)
+        self.commands.ROR.newValue(velocity)
+        self.runCommand(self.commands.ROR)
 
     def rotate_left(self, velocity):
-        a = self.commands.ROL.newValue(velocity)
-        self.runCommand(a)
+        self.commands.ROL.newValue(velocity)
+        self.runCommand(self.commands.ROL)
     
     def stop(self):
         self.runCommand(self.commands.MST)
@@ -36,9 +43,6 @@ class controll:
 
     def getActualPosition(self):
         self.runCommand(self.commands.GAP)
-
-    def close(self):
-        self.__connection.close()
 
 
 class comData:
@@ -57,7 +61,7 @@ class comData:
     def getNextCommand(self):
         self.lock.acquire()
         if self.__prioStop:
-            raise NotImplemented # TODO: implement
+            raise NotImplementedError # TODO: implement
         c = self.__commands.pop()
         self.lock.release()
         return c.getByteArray()

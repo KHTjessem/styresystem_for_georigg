@@ -4,6 +4,7 @@ bottle-websocket==0.2.9
 canopen==1.2.0
 cffi==1.14.4
 Eel==0.14.0
+Events==0.4
 future==0.18.2
 gevent==21.1.2
 gevent-websocket==0.10.1
