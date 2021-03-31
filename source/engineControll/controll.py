@@ -1,35 +1,72 @@
 import comSerial
 from comStructs import command
+import commands as definedCommands
+import threading
 
-# TODO: implement all controll commands.
 class controll:
     def __init__(self):
-        self.__connection = comSerial.connection('COM3')
+        self.commands = definedCommands.commands()
+        self.comdata = comData()
+        #self.__connection = comSerial.connection('COM3')
+        self.__con = comSerial.connection('COM3', self.comdata)
+        self.__con.setDaemon(True)
+        self.__con.start()
 
-    
-    # adress and choice of motor/axis is hardcoded.
-    # TODO: get module adress, engine/axis etc from "dynamic" source
+    # TODO: Might need a lock to make sure only one event at a time
+    # Probebly not needed as this will all go in one thread, therefore 
+    # it is synced.
+    def runCommand(self, command):
+        self.comdata.newCommand(command)
+        self.__con.newComEv.set()
+        self.__con.replyReadyEv.wait() # Can set a timeout. TODO
+        self.__con.replyReadyEv.clear()
+        #TODO: process the reply and send information to frontend.
+
     def rotate_right(self, velocity):
-        ROR = command(1,1, 0, 0, velocity)
-        return self.__connection.write(ROR.getByteArray())
+        a = self.commands.ROR.newValue(velocity)
+        self.runCommand(a)
 
     def rotate_left(self, velocity):
-        ROL = command(1, 2, 0, 0, velocity)
-        s = self.__connection.write(ROL.getByteArray())
-        print(s)
+        a = self.commands.ROL.newValue(velocity)
+        self.runCommand(a)
     
     def stop(self):
-        MST = command(1, 3, 0, 0, 0)
-        s = self.__connection.write(MST.getByteArray())
-        print(s)
+        self.runCommand(self.commands.MST)
     
 
     def getActualPosition(self):
-        GAP = command(1, 6, 1, 0, 0)
-        s = self.__connection.write(GAP.getByteArray())
-        #print("Position: " + str(int.from_bytes(s.value, 'big', signed=True)))
-        #print(str(s.value))
-        return int.from_bytes(s.value, 'big', signed=True)
+        self.runCommand(self.commands.GAP)
 
     def close(self):
         self.__connection.close()
+
+
+class comData:
+    def __init__(self):
+        self.__commands = []
+        self.__prioStop = False
+        self.lock = threading.Lock()
+
+        self.__reply = None
+    
+    def newCommand(self, command):
+        self.lock.acquire()
+        self.__commands.append(command)
+        self.lock.release()
+    
+    def getNextCommand(self):
+        self.lock.acquire()
+        c = self.__commands.pop()
+        self.lock.release()
+        return c.getByteArray()
+    
+    def newReply(self, reply):
+        self.lock.acquire()
+        self.__reply = reply # maybe turn __reply into a list?
+        self.lock.release()
+    
+    def getReply(self):
+        self.lock.acquire()
+        r = self.__reply
+        self.lock.release()
+        return r
