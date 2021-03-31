@@ -1,6 +1,8 @@
 var controlStatus = document.getElementById("status-panel")
 var graph = document.getElementById("Graph")
 var controlPanel = document.getElementById("control-panel")
+var homeButn = document.getElementById("homeButton")
+var lightMotor = document.getElementById("light")
 
 // for status panel
 var slider = document.getElementById("slider")
@@ -21,16 +23,22 @@ boks.value = slider.value
 
 function hideStatus() {
     graph.style.display = "none";
-    if (controlStatus.style.display=== "none"){
-        controlStatus.style.display = "block";
-        controlPanel.style.display = "block";       
+    if (controlPanel.style.display=== "none"){
+        controlPanel.style.display = "flex";       
     }
 
 }  
 
 function hide(){
-    controlStatus.style.display = "none";
     controlPanel.style.display = "none"; 
-    if (graph.style.display=== "none")
-        graph.style.display = "block";
+    graph.style.display = "block";
 }
+
+// function Angle(){
+    //todo
+// }
+
+// function light(){
+//     todo
+
+// }
