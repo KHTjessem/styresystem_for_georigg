@@ -34,5 +34,5 @@ def close_callback(route, websockets):
         cont.close()
         exit()
 
-eel.start('index.html', close_callback=close_callback)
+eel.start('index.html')
 
