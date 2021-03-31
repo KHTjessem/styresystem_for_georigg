@@ -1,0 +1,171 @@
+/*
+Color pallete
+https://coolors.co/292f3d-d64933-1c7363-01baef-fbfbff
+*/
+
+
+body {
+    background-color: #292F3D;
+    margin: 0;
+    color: #FBFBFF;
+    font-size: larger;
+}
+
+header {
+    background-color: #D64933;
+    padding: 10pt;
+    display: flex;
+}
+.emBtn{
+    position: absolute;
+    right: 15px;
+
+}
+
+.panel {
+    background-color: #1C7363;
+    width: 90%;
+    margin: 20pt auto;
+    padding: 5pt;
+    min-height: 180pt;
+    display: block;
+    
+}
+
+#statusSignal{
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    min-height: 90pt;
+    
+
+}
+#status-panel {
+    min-height: 50pt;
+    width: 50%; 
+    margin-right: 50%;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: #292F3D solid;      
+}
+
+.signal{
+    min-height: 50pt;
+    width: 50%;
+    background-color: #1C7363;  
+}
+
+.light{
+    display: flex;
+    float: right;
+    background-color:#D64933;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: 30px;
+    margin-right: 20px
+
+}
+
+.textlight{
+    margin-top: 29px;
+}
+
+#control-panel{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+      
+}
+
+.box{
+    display: flex;
+    justify-content: center;
+    border: solid #292F3D ;
+    width: 30pt;
+    height: 15pt;
+    
+
+}
+
+.rotationalButton{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons{
+    float: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.homeButton{
+    display: flex;
+    justify-content: center;
+}
+
+.sliderbox{
+    display:flex;
+    flex-direction: column;
+    border: #292F3D solid;
+    padding: 10pt;
+
+}
+
+.sliderDiv{
+    display:flex;
+    flex-direction: column;
+    border: #292F3D solid;
+    padding: 10pt;
+    margin-top: 10pt;
+}
+
+
+.status {
+    background-color: #1C7363;
+    color: white;
+    border: none;
+   
+}
+  
+.dropdown {
+    background-color: #1C7363;
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    margin-left: 2px;
+    margin-right: 2px;
+
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    float: right;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content a {
+    color: #292F3D;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+#Graph{
+    display: none;
+}
