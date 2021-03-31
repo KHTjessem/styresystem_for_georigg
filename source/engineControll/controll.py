@@ -56,6 +56,8 @@ class comData:
     
     def getNextCommand(self):
         self.lock.acquire()
+        if self.__prioStop:
+            raise NotImplemented # TODO: implement
         c = self.__commands.pop()
         self.lock.release()
         return c.getByteArray()
