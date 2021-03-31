@@ -7,26 +7,68 @@
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>
-
-    <header>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet illo enim et animi consequuntur.
-    </header>
     
-    <div class="panel" id="status-panel">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus architecto ipsa quos, asperiores enim animi voluptatum dicta. Necessitatibus veritatis praesentium magni ipsam, cumque amet ab nulla magnam omnis, delectus deleniti!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, non. Officiis assumenda fugit qui ratione maxime, quod facilis aut dolores vero. Perferendis qui eius, molestiae commodi ullam ratione ab doloremque?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio voluptas facere eum at tempore dolor odio veritatis temporibus suscipit, ut sed cumque ex. Voluptatem quae id tempore mollitia laudantium eum.
-    </div>
+    <header>
+        <div class="dropdown" style="float:left;">
+            <button class="status">Status</button>
+            <div class="dropdown-content" style="left:0;">
+              <a onclick="hideStatus()">Control-panel</a>
+              <a onclick="hide()">Graph</a>
+            </div>
+          </div>
 
-    <div class="panel" id="controll-panel">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quisquam quam earum cum debitis illum. Quas molestias consectetur corporis iste nisi molestiae aperiam eius, dignissimos cupiditate a quibusdam doloremque fuga?
-    </div>
+          <div class="dropdown" style="float:left;">
+            <button class="status">Angle</button>
+            <div class="dropdown-content" style="left:0;">
+              <a >30 Degrees</a>
+              <a >60 Degrees</a>
+              <a >90 Degrees</a>
+            </div>
+          </div>
+          
+        <div class="emBtn" >
+        <button class="dropdown" id= "emergency">Emergency-Stop</button>
+        </div>
+</header>
 
-    <div class="panel">
+    <div class="panel" id="statusSignal"> 
+
+        <div class="panel" id="status-panel">Status</div>
+       
+        <div class="signal"> 
+            <div class="light" id="light"> </div>
+            <div class="textlight">Signal light for Motor</div>
+        </div>
+</div>
+    
+    <div class="panel" id="control-panel">
+        <div class="sliderbox">
+            <div class="box" id="box"></div>
+
+        </div>
+
+        <div class="sliderDiv">
+            <input type="text" min="1" max="1000"  class="input" id="input">
+            <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
+            
+        </div>
+        <div class="homeButton">
+            <button id="homeButton">Home </button>
+        </div>
+        <div class="rotationalButton">     
+            <button id="leftButton">Left rotate</button>
+            <button id="stopButton">Stop</button>
+            <button id="rightButton">Right rotate</button>
+        </div>
+    </div>
+    
+    <div class="panel" id="Graph">
+        drawFunction
         <button id="get_numb">Get numbs</button>
         <div id="numb-test"></div>
     </div>
 
 </body>
 <script src="./main.js"></script>
+<script src="./guiControl.js"></script>
 </html>
