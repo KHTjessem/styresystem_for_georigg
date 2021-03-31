@@ -1,15 +1,16 @@
 import eel
 import sys
-
 import random
 
 from controll import controll
-
-# Engine init
-cont = controll()
+from GUIcomEvents import eventsList
 
 # EEL init
 eel.init('web')
+events = eventsList(eel)
+
+# Engine init
+cont = controll(events.evDict)
 
 @eel.expose
 def rotate_right(velocity):

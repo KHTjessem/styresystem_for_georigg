@@ -13,14 +13,17 @@ class command:
         calckChecksum(self)
     
     def getByteArray(self):
-        #Byte Byte Byte Byte Integer(4 bytes) Byte
-        return struct.pack('>BBBBiB',
-            self.module_address, self.command_number,
-            self.type_number, self.motor_bank, self.value, self.checksum)
+        return gba(self)
     
     def newValue(self, value):
         self.value = value
-        self.calckChecksum() #update checksum
+        calckChecksum(self) #update checksum
+
+def gba(obj):
+    #Byte Byte Byte Byte Integer(4 bytes) Byte
+    return struct.pack('>BBBBiB',
+        obj.module_address, obj.command_number,
+        obj.type_number, obj.motor_bank, obj.value, obj.checksum)
 
 def calckChecksum(obj):
     arr = struct.pack('>BBBBi', obj.module_address, obj.command_number, 
