@@ -36,7 +36,7 @@ header {
     display: flex;
     width: 90%;
     justify-content: space-between;
-    min-height: 90pt;
+    min-height: 40pt;
     
 
 }
@@ -64,9 +64,8 @@ header {
     width: 20px;
     height: 20px;
     margin-top: 30px;
-    margin-right: 20px
-    b
-
+    margin-right: 20px;
+    border: #292F3D solid;
 }
 
 .textlight{
@@ -96,14 +95,21 @@ header {
 }
 
 .buttons{
-    float: center;
-    display: flex;
-    justify-content: space-between;
+    background-color:#01BAEF ;
+    padding: 10px;
+    min-width: 60px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    color: #292F3D;
 }
 
 .homeButton{
     display: flex;
-    justify-content: center;
+    justify-content: center;    
+}
+#homeButton{
+    margin-right: 8px;
 }
 
 .sliderbox{
@@ -169,4 +175,12 @@ header {
 
 #Graph{
     display: none;
+}
+
+#input{
+    width: 25px;
+}
+.speed {
+    margin: auto;
+
 }

@@ -35,7 +35,7 @@
 
         <div class="panel" id="status-panel">
             <span>Status:</span>
-            <span id="status-text"></span>
+            <li id="status-text">feedback from motor</li>
         </div>
        
         <div class="signal"> 
@@ -46,22 +46,22 @@
     
     <div class="panel" id="control-panel">
         <div class="sliderbox">
-            <div class="box" id="box"></div>
-            <hr size="8" width="90%" color="red"> 
+            <input type="range" min="-50" disabled max="50" value="50" class="slider">
         </div>
 
         <div class="sliderDiv">
-            <input type="text" min="1" max="1000"  class="input" id="input">
+            <div class="speed">
+            <input type="text" min="1" max="1000"  class="input" id="input"> <span>mm/h</span> </div>
             <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
             
         </div>
         <div class="homeButton">
-            <button id="homeButton">Home </button>
+            <button class="buttons" id="homeButton">Home </button>
         </div>
         <div class="rotationalButton">     
-            <button id="leftButton">Left rotate</button>
-            <button id="stopButton">Stop</button>
-            <button id="rightButton">Right rotate</button>
+            <button class="buttons" id="leftButton">Left rotate</button>
+            <button class="buttons" id="stopButton">Stop</button>
+            <button class="buttons" id="rightButton">Right rotate</button>
         </div>
     </div>
     

@@ -9,18 +9,18 @@ from GUIcomEvents import eventsList
 eel.init('web')
 events = eventsList(eel)
 
-# Engine init
-cont = controll(events.evDict)
+# # Engine init
+# cont = controll(events.evDict)
 
-@eel.expose
-def rotate_right(velocity):
-    cont.rotate_right(velocity)
-@eel.expose
-def rotate_left(velocity):
-    cont.rotate_left(velocity)
-@eel.expose
-def stop():
-    cont.stop()
+# @eel.expose
+# def rotate_right(velocity):
+#     cont.rotate_right(velocity)
+# @eel.expose
+# def rotate_left(velocity):
+#     cont.rotate_left(velocity)
+# @eel.expose
+# def stop():
+#     cont.stop()
 
 
 
