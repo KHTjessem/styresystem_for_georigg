@@ -8,14 +8,13 @@ class controll:
         self.commands = definedCommands.commands()
         self.comdata = comData()
         self.events = events
-        #self.__connection = comSerial.connection('COM3')
-        self.__con = comSerial.connection('COM3', self.comdata)
+        self.__con = comSerial.connection(self.comdata)
         self.__con.setDaemon(True)
         self.__con.start()
         self.events['updStatusText'].trigger('Connected to engine.')
 
     # TODO: Might need a lock to make sure only one event at a time
-    # Probebly not needed as this will all go in one thread, therefore 
+    # Probably not needed as this will all go in one thread, therefore 
     # it is synced.
     def runCommand(self, command):
         self.comdata.newCommand(command)

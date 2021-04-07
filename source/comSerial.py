@@ -4,8 +4,10 @@ import threading
 import atexit
 
 class connection(threading.Thread):
-    def __init__(self, comport, comData):
+    def __init__(self, comData):
         threading.Thread.__init__(self)
+
+        comport = findComPort()
         self.__serialCon = serial.Serial(comport, timeout=1)
         self.comdata = comData
         self.newComEv = threading.Event()
@@ -31,3 +33,12 @@ class connection(threading.Thread):
             self.newComEv.clear()
             self.replyReadyEv.set()
 
+
+
+def findComPort():
+    lports = serial.tools.list_ports
+
+    ports = [tuple(port) for port in list(lports.comports())]
+    for p in ports:
+        if p[1] == "trinamic stepper": #TODO: add correct name to check for
+            return p[0]
