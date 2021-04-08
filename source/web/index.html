@@ -12,8 +12,10 @@
         <div class="dropdown" style="float:left;">
             <button class="status">Status</button>
             <div class="dropdown-content" style="left:0;">
-              <a onclick="hideStatus()">Control-panel</a>
+              <a onclick="hideStatus()">Velocity-Panel</a>
+              <a onclick="hidePosition()">Position-Panel</a>
               <a onclick="hide()">Graph</a>
+
             </div>
           </div>
 
@@ -31,27 +33,37 @@
         </div>
 </header>
 
-    <div class="panel" id="statusSignal"> 
-
+<div class="panel"> 
+    <div id="statusSignal">
         <div class="panel" id="status-panel">
             <span>Status:</span>
-            <li id="status-text">feedback from motor</li>
-        </div>
-       
+            <li id="status-text">Feedback from motor</li>
+        </div>  
         <div class="signal"> 
             <div class="light" id="light"> </div>
-            <div class="textlight">Signal light for Motor</div>
+            <div class="textlight">Signal light for motor</div>
         </div>
+    </div>
+    <div class="sliderbox" id="slidPosition">
+                <input type="range" min="-50" max="50" value="0" class="sliderPosition">
+    </div>
 </div>
-    
-    <div class="panel" id="control-panel">
-        <div class="sliderbox">
-            <input type="range" min="-50" disabled max="50" value="50" class="slider">
-        </div>
 
+<div class="panel" id="position-panel">
+    <input type="number" min="1" max="1000"  class="input" id="positionInput">
+    <div class="homeButton">
+        <button class="buttons" id="setposition">Start</button>
+        <button class="buttons" id="homeButton">Home</button>
+       
+    </div>
+
+</div>
+
+    
+<div class="panel" id="velocity-panel">
         <div class="sliderDiv">
             <div class="speed">
-            <input type="text" min="1" max="1000"  class="input" id="input"> <span>mm/h</span> </div>
+            <input type="number" min="1" max="1000" maxlength="1000" class="input" id="input"> <span>mm/h</span> </div>
             <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
             
         </div>
@@ -63,13 +75,13 @@
             <button class="buttons" id="stopButton">Stop</button>
             <button class="buttons" id="rightButton">Right rotate</button>
         </div>
-    </div>
+</div>
     
-    <div class="panel" id="Graph">
+<div class="panel" id="Graph">
         drawFunction
         <button id="get_numb">Get numbs</button>
         <div id="numb-test"></div>
-    </div>
+</div>
 
 </body>
 <script src="./main.js"></script>
