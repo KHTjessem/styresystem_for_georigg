@@ -36,3 +36,9 @@ eel.expose(updStatusText)
 function updStatusText(text) {
     document.getElementById("status-text").innerText = text    
 }
+
+
+eel.expose(updStatus)
+function updStatus(st) {
+    statusUpdate(st)
+}
