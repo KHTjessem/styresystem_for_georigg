@@ -8,10 +8,11 @@ class controll:
         self.commands = definedCommands.commands()
         self.comdata = comData()
         self.events = events
+        self.events['updStatus'].trigger(111)
         self.__con = comSerial.connection(self.comdata)
         self.__con.setDaemon(True)
         self.__con.start()
-        self.events['updStatusText'].trigger('Connected to engine.')
+        self.events['updStatus'].trigger(222)
 
     # TODO: Might need a lock to make sure only one event at a time
     # Probably not needed as this will all go in one thread, therefore 
@@ -20,12 +21,14 @@ class controll:
         self.comdata.newCommand(command)
         self.__con.newComEv.set()
         self.__con.replyReadyEv.wait() # Can set a timeout. TODO
+        self.events['updStatus'].trigger(command.command_number)
         #TODO: process the reply and send information to frontend.
         self.handleReply()
         self.__con.replyReadyEv.clear()
     
     def handleReply(self):
-        self.events['updStatusText'].trigger('Success')
+        pass #TODO
+        #self.events['updStatusText'].trigger('Success')
 
 
     def rotate_right(self, velocity):

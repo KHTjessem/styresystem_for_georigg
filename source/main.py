@@ -9,24 +9,20 @@ from GUIcomEvents import eventsList
 eel.init('web')
 events = eventsList(eel)
 
-# # Engine init
-# cont = controll(events.evDict)
-
-# @eel.expose
-# def rotate_right(velocity):
-#     cont.rotate_right(velocity)
-# @eel.expose
-# def rotate_left(velocity):
-#     cont.rotate_left(velocity)
-# @eel.expose
-# def stop():
-#     cont.stop()
-
-
+# Engine init
+cont = controll(events.evDict)
 
 @eel.expose
-def rand_numb():
-    return random.randint(0, 100)
+def rotate_right(velocity):
+    cont.rotate_right(velocity)
+@eel.expose
+def rotate_left(velocity):
+    cont.rotate_left(velocity)
+@eel.expose
+def stop():
+    cont.stop()
+
+
 
 
 def close_callback(route, websockets):
