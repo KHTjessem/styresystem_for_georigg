@@ -1,6 +1,9 @@
 var controlStatus = document.getElementById("status-panel")
 var graph = document.getElementById("Graph")
-var controlPanel = document.getElementById("control-panel")
+var velocityPanel = document.getElementById("velocity-panel")
+
+var positionPanel = document.getElementById("position-panel")
+
 var homeButn = document.getElementById("homeButton")
 var lightMotor = document.getElementById("light")
 
@@ -23,14 +26,19 @@ boks.value = slider.value
 
 function hideStatus() {
     graph.style.display = "none";
-    if (controlPanel.style.display=== "none"){
-        controlPanel.style.display = "flex";       
-    }
+    positionPanel.style.display = "none";
+    velocityPanel.style.display = "block";      
 
-}  
+} 
+function hidePosition(){
+    velocityPanel.style.display = "none"; 
+    graph.style.display = "none";
+    positionPanel.style.display = "flex"
+}
 
 function hide(){
-    controlPanel.style.display = "none"; 
+    velocityPanel.style.display = "none";
+    positionPanel.style.display = "none";
     graph.style.display = "block";
 }
 

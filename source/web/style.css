@@ -21,22 +21,19 @@ header {
     right: 15px;
 
 }
-
 .panel {
     background-color: #1C7363;
     width: 90%;
     margin: 20pt auto;
     padding: 5pt;
-    min-height: 180pt;
     display: block;
     
 }
-
 #statusSignal{
     display: flex;
     width: 90%;
     justify-content: space-between;
-    min-height: 90pt;
+    min-height: 40pt;
     
 
 }
@@ -64,15 +61,36 @@ header {
     width: 20px;
     height: 20px;
     margin-top: 30px;
-    margin-right: 20px
-
+    margin-right: 20px;
+    border: #292F3D solid;
 }
 
 .textlight{
     margin-top: 29px;
 }
 
-#control-panel{
+#slidPosition{
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+
+}
+
+.sliderPosition{
+    width: 90%;
+    margin: auto;
+    
+}
+.sliderPosition::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  height: 50px;
+  width: 40px;
+  cursor: pointer;
+  margin-bottom: 40px;  
+}
+
+
+#Velocity-panel{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -85,7 +103,6 @@ header {
     border: solid #292F3D ;
     width: 30pt;
     height: 15pt;
-    
 
 }
 
@@ -95,19 +112,28 @@ header {
 }
 
 .buttons{
-    float: center;
-    display: flex;
-    justify-content: space-between;
+    background-color:#01BAEF ;
+    padding: 10px;
+    min-width: 60px;
+    font-size: 14px;
+    margin-top: 40px;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+    color: #292F3D;
 }
 
 .homeButton{
     display: flex;
-    justify-content: center;
+    justify-content: center;    
+}
+#homeButton{
+    margin-right: 20px;
 }
 
 .sliderbox{
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     border: #292F3D solid;
     padding: 10pt;
 
@@ -121,6 +147,18 @@ header {
     margin-top: 10pt;
 }
 
+#position-panel{
+    display: none;
+    flex-direction: column;
+    min-height: 80px;
+}
+
+#positionInput{
+    margin: auto;
+    margin-top: 20px;
+    width: 60px;
+ 
+}
 
 .status {
     background-color: #1C7363;
@@ -168,4 +206,23 @@ header {
 
 #Graph{
     display: none;
+}
+
+.input{
+    width: 40px;
+    max-lines: 3;
+    
+}
+
+/* hide the arrow from number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.speed {
+    margin: auto;
+
 }
