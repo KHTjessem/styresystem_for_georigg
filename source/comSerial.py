@@ -1,4 +1,5 @@
 import serial
+from serial.tools import list_ports as lports
 import comStructs
 import threading
 import atexit
@@ -36,9 +37,7 @@ class connection(threading.Thread):
 
 
 def findComPort():
-    lports = serial.tools.list_ports
-
     ports = [tuple(port) for port in list(lports.comports())]
     for p in ports:
-        if p[1] == "trinamic stepper": #TODO: add correct name to check for
+        if "TMCSTEP" in p[2]: #TODO: add correct name to check for
             return p[0]
