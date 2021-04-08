@@ -149,16 +149,56 @@ header {
 
 #position-panel{
     display: none;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     min-height: 80px;
 }
 
+.goPosition{
+    display: flex;
+    flex-direction: column;
+}
 #positionInput{
     margin: auto;
-    margin-top: 20px;
     width: 60px;
- 
 }
+
+#absoluteBtn{
+    margin-top: 0;
+}
+#relativeBtn{
+    margin-top: 0;
+}
+
+.setPosition{
+    display: flex;
+    flex-direction: column;
+}
+
+#homeButton{
+    margin-right: 10px;
+}
+
+.rotatebtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btnRot{
+    background-color:#01BAEF ;
+    padding: 10px;
+    font-size: 14px;
+    width: 120px;
+    height: 120px;
+    border: none;
+    margin: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+
 
 .status {
     background-color: #1C7363;
@@ -226,3 +266,5 @@ input::-webkit-inner-spin-button {
     margin: auto;
 
 }
+
+

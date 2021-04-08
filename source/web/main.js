@@ -28,9 +28,6 @@ function stop (){
 
 document.getElementById("stopButton").addEventListener('click', stop)
 
-
-
-
 // EEL exported functions.
 eel.expose(updStatusText)
 function updStatusText(text) {
