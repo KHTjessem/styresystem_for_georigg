@@ -44,9 +44,38 @@
         </div>
     </div>
     
-    <div class="sliderbox" id="slidPosition">
-                <input type="range" min="-50" max="50" value="0" class="sliderPosition">
-    </div>
+    <div class="sliderbox"  id="slidPosition">
+        <input class="sliderPosition" id="sliderPos" type="range" list="dl"/>
+          <div class="labels" aria-hidden="true">
+              <span style="--i: 0">0</span>
+              <span style="--i: 1">10</span>
+              <span style="--i: 2">20</span>
+              <span style="--i: 3">30</span>
+              <span style="--i: 4">40</span>
+              <span style="--i: 5">50</span>
+              <span style="--i: 6">60</span>
+              <span style="--i: 7">70</span>
+              <span style="--i: 8">80</span>
+              <span style="--i: 9">90</span>
+              <span style="--i: 10">100</span>
+          </div>
+        </label>
+        <datalist id="dl">
+          <option value="0" label="0"></option>
+          <option value="10" label="10"></option>
+          <option value="20" label="20"></option>
+          <option value="30" label="30"></option>
+          <option value="40" label="40"></option>
+          <option value="50" label="50"></option>
+          <option value="60" label="60"></option>
+          <option value="70" label="70"></option>
+          <option value="80" label="80"></option>
+          <option value="90"label="90"></option>
+          <option value="100" label="100"></option>
+        </datalist>
+      </div>
+
+
 </div>
 
 
