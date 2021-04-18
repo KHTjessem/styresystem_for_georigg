@@ -45,71 +45,10 @@
     </div>
     
     <div class="sliderbox"  id="slidPosition">
-        <input class="sliderPosition" id="sliderPos" type="range" list="dl"/>
-          <div class="labels" aria-hidden="true">
-              <span style="--i: 0.2">-14</span>
-              <span style="--i: 1.2">-13</span>
-              <span style="--i: 2.2">-12</span>
-              <span style="--i: 3.2">-11</span>
-              <span style="--i: 4.2">-10</span>
-              <span style="--i: 5.2">-9</span>
-              <span style="--i: 6.2">-8</span>
-              <span style="--i: 7.2">-7</span>
-              <span style="--i: 8.2">-6</span>
-              <span style="--i: 9.2">-5</span>
-              <span style="--i: 10.2">-4</span>
-              <span style="--i: 11.2">-3</span>
-              <span style="--i: 12.2">-2</span>
-              <span style="--i: 13.2">-1</span>
-              <span style="--i: 14.2">0</span>
-              <span style="--i: 15.2">1</span>
-              <span style="--i: 16.2">2</span>
-              <span style="--i: 17.2">3</span>
-              <span style="--i: 18.2">4</span>
-              <span style="--i: 19.2">5</span>
-              <span style="--i: 20.2">6</span>
-              <span style="--i: 21.2">7</span>
-              <span style="--i: 22.2">8</span>
-              <span style="--i: 23.2">9</span>
-              <span style="--i: 24.2">10</span>
-              <span style="--i: 25.2">11</span>
-              <span style="--i: 26.2">12</span>
-              <span style="--i: 27.2">13</span>
-              <span style="--i: 28.2">14</span>
+        <div class="positionWrap">
+            <div class="positionValue" id="PositionValue"></div>
+            <input type="range" min="-130" max="130" value="0" step="1" class="PositionSlider" id="positionRange">
           </div>
-        </label>
-        <datalist id="dl">
-          <option value="-14" label="-14"></option>
-          <option value="-13" label="-13"></option>
-          <option value="-12" label="-12"></option>
-          <option value="-11" label="-11"></option>
-          <option value="-10" label="-10"></option>
-          <option value="-9" label="-9"></option>
-          <option value="-8" label="-8"></option>
-          <option value="-7" label="-7"></option>
-          <option value="-6" label="-6"></option>
-          <option value="-5" label="-5"></option>
-          <option value="-4"label="-4"></option>
-          <option value="-3" label="-3"></option>
-          <option value="-2" label="-2"></option>
-          <option value="-1" label="-1"></option>
-          <option value="0" label="0"></option>
-          <option value="1" label="1"></option>
-          <option value="2" label="2"></option>
-          <option value="3" label="3"></option>
-          <option value="4" label="4"></option>
-          <option value="5" label="5"></option>
-          <option value="6" label="6"></option>
-          <option value="7" label="7"></option>
-          <option value="8"label="8"></option>
-          <option value="9" label="9"></option>
-          <option value="10" label="10"></option>
-          <option value="11" label="11"></option>
-          <option value="12" label="12"></option>
-          <option value="13" label="13"></option>
-          <option value="14" label="14"></option>
-
-        </datalist>
       </div>
 
 
@@ -141,7 +80,12 @@
 <div class="panel" id="velocity-panel">
         <div class="sliderDiv">
             <div class="speed">
-            <input type="number" min="1" max="1000" maxlength="1000" class="input" id="input"> <span>mm/h</span> </div>
+            <span>You want 
+                <input type="number" min="1" max="1000" maxlength="1000" class="input" id="input"> 
+                mm/h but you gonna get 
+                <input type="number" disabled class="input" id="GetInput"> mm/h 
+            </span>  
+            </div>
             <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
             
         </div>
@@ -164,4 +108,5 @@
 <script src="./main.js"></script>
 <script src="./status.js"></script>
 <script src="./guiControl.js"></script>
+<script src="./sliderPosition.js"></script>
 </html>
