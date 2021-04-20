@@ -10,3 +10,21 @@ const
   };
 document.addEventListener("DOMContentLoaded", setValue);
 positionRange.addEventListener('input', setValue);
+
+
+
+var slider = document.getElementById("slider")
+var boks = document.getElementById("relVelocity")
+
+
+// update the slider value.
+function writeSlider () {
+    boks.value = this.value;   
+}
+slider.oninput = writeSlider;
+
+function writeValue (){
+    slider.value = this.value
+}
+boks.oninput = writeValue
+boks.value = slider.value

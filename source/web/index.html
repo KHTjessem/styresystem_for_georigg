@@ -47,7 +47,7 @@
     <div class="sliderbox"  id="slidPosition">
         <div class="positionWrap">
             <div class="positionValue" id="PositionValue"></div>
-            <input type="range" min="-130" max="130" value="0" step="1" class="PositionSlider" id="positionRange">
+            <input type="range" min="-130" max="130" value="0" step="1" class="PositionSlider" id="positionRange" disabled>
           </div>
       </div>
 
@@ -81,7 +81,7 @@
         <div class="sliderDiv">
             <div class="speed">
             <span>You want 
-                <input type="number" min="1" max="1000" maxlength="1000" class="input" id="input"> 
+                <input type="number" min="1" max="1000" maxlength="1000" class="input" id="relVelocity"> 
                 mm/h but you gonna get 
                 <input type="number" disabled class="input" id="GetInput"> mm/h 
             </span>  
@@ -109,4 +109,5 @@
 <script src="./status.js"></script>
 <script src="./guiControl.js"></script>
 <script src="./sliderPosition.js"></script>
+<script src="./calculation.js"></script>
 </html>
