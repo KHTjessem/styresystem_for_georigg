@@ -69,32 +69,64 @@ header {
     margin-top: 29px;
 }
 
-#slidPosition{
+
+
+.PositionSlider {
+    -webkit-appearance: none;
+    margin: 20px 0;
+    width: 100%;
+    justify-content: center;
+  }
+ 
+  .PositionSlider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #03a9f4;
+    border-radius: 25px;
+  }
+  .PositionSlider::-webkit-slider-thumb {
+    height: 20px;
+    width: 20px;
+    
+    background: #fff;
+    box-shadow: 0 0 4px 0 rgba(0,0,0, 1);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -8px;
+  }
+
+  .positionWrap{
     width: 80%;
     margin: auto;
-    margin-top: 20px;
 
-}
-
-.sliderPosition{
-    width: 90%;
-    margin: auto;
-    
-}
-.sliderPosition::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  height: 50px;
-  width: 40px;
-  cursor: pointer;
-  margin-bottom: 40px;  
-}
-
+    position: relative;
+  }
+  .positionValue{
+    position: absolute;
+    top: -50%;
+  }
+  .positionValue span{
+    width: 30px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: #03a9f4;
+    color: #fff;
+    font-size: 12px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 6px;
+  }
+ 
 
 #Velocity-panel{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-      
+
 }
 
 .box{
@@ -135,7 +167,8 @@ header {
     display:flex;
     flex-direction: row;
     border: #292F3D solid;
-    padding: 10pt;
+    padding-top: 20pt;
+    margin-top:20px;
 
 }
 
@@ -149,16 +182,56 @@ header {
 
 #position-panel{
     display: none;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     min-height: 80px;
 }
 
+.goPosition{
+    display: flex;
+    flex-direction: column;
+}
 #positionInput{
     margin: auto;
-    margin-top: 20px;
     width: 60px;
- 
 }
+
+#absoluteBtn{
+    margin-top: 0;
+}
+#relativeBtn{
+    margin-top: 0;
+}
+
+.setPosition{
+    display: flex;
+    flex-direction: column;
+}
+
+#homeButton{
+    margin-right: 10px;
+}
+
+.rotatebtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btnRot{
+    background-color:#01BAEF ;
+    padding: 10px;
+    font-size: 14px;
+    width: 120px;
+    height: 120px;
+    border: none;
+    margin: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+
 
 .status {
     background-color: #1C7363;
@@ -226,3 +299,5 @@ input::-webkit-inner-spin-button {
     margin: auto;
 
 }
+
+

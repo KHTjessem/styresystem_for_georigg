@@ -6,8 +6,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='./style.css'>
     <script type="text/javascript" src="/eel.js"></script>
 </head>
-<body>
-    
+<body>  
     <header>
         <div class="dropdown" style="float:left;">
             <button class="status">Status</button>
@@ -44,26 +43,49 @@
             <div class="textlight">Signal light for motor</div>
         </div>
     </div>
-    <div class="sliderbox" id="slidPosition">
-                <input type="range" min="-50" max="50" value="0" class="sliderPosition">
-    </div>
+    
+    <div class="sliderbox"  id="slidPosition">
+        <div class="positionWrap">
+            <div class="positionValue" id="PositionValue"></div>
+            <input type="range" min="-130" max="130" value="0" step="1" class="PositionSlider" id="positionRange" disabled>
+          </div>
+      </div>
+
+
 </div>
+
 
 <div class="panel" id="position-panel">
-    <input type="number" min="1" max="1000"  class="input" id="positionInput">
-    <div class="homeButton">
-        <button class="buttons" id="setposition">Start</button>
-        <button class="buttons" id="homeButton">Home</button>
-       
+
+    <div class="goPosition">
+    <input type="number" min="1" max="1000"  class="input"     id="positionInput">
+        <div>
+        <button class="buttons" id="absoluteBtn">Position absolute</button>
+        <button class="buttons" id="relativeBtn">Position relative </button>
+        </div>
     </div>
 
-</div>
+    <div  class="setPosition">
+        <button class="buttons" id="setHome">Set Home</button>
+        <button class="buttons" id="homeButton">Home</button>
+    </div>
+    <div class="rotatebtn">
+        <button class="btnRot" id="LeftRBtn">Left rotate</button>
+        <button class="btnRot" id="rightRBtn">Right rotate</button>
 
-    
+    </div>
+   
+</div>
+   
 <div class="panel" id="velocity-panel">
         <div class="sliderDiv">
             <div class="speed">
-            <input type="number" min="1" max="1000" maxlength="1000" class="input" id="input"> <span>mm/h</span> </div>
+            <span>You want 
+                <input type="number" min="1" max="1000" maxlength="1000" class="input" id="relVelocity"> 
+                mm/h but you gonna get 
+                <input type="number" disabled class="input" id="GetInput"> mm/h 
+            </span>  
+            </div>
             <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
             
         </div>
@@ -87,6 +109,8 @@
 <script src="./main.js"></script>
 <script src="./status.js"></script>
 <script src="./guiControl.js"></script>
+<script src="./sliderPosition.js"></script>
+<script src="./calculation.js"></script>
 <script src="./chart.js"></script>
 <script src="./chartControll.js"></script>
 </html>
