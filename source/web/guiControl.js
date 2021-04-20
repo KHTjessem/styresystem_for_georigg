@@ -26,12 +26,3 @@ function hide(){
     positionPanel.style.display = "none";
     graph.style.display = "block";
 }
-
-// function Angle(){
-    //todo
-// }
-
-// function light(){
-//     todo
-
-// }

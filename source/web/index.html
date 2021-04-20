@@ -67,7 +67,7 @@
 
     <div  class="setPosition">
         <button class="buttons" id="setHome">Set Home</button>
-        <button class="buttons" id="homeButton">Home</button>
+        <button class="buttons" id="Homebtn">Home</button>
     </div>
     <div class="rotatebtn">
         <button class="btnRot" id="LeftRBtn">Left rotate</button>
@@ -78,25 +78,44 @@
 </div>
    
 <div class="panel" id="velocity-panel">
-        <div class="sliderDiv">
-            <div class="speed">
-            <span>You want 
-                <input type="number" min="1" max="1000" maxlength="1000" class="input" id="relVelocity"> 
-                mm/h but you gonna get 
-                <input type="number" disabled class="input" id="GetInput"> mm/h 
-            </span>  
-            </div>
-            <input type="range" min="1" max="1000" value="500" class="slider" id="slider">
-            
+    <div class="sliderDiv">
+        <div class="speed">
+        <span>You want 
+            <input type="number" min="1" class="input" id="relVelocity"> 
+            mm/h but you gonna get 
+            <input type="number" disabled class="input" id="GetInput"> mm/h 
+        </span>  
         </div>
-        <div class="homeButton">
+
+        <input type="range" min="1" max="120" value="60" class="slider" id="slider">
+            
+    </div>
+
+    <div>
+        <div>
+            <span>Max run time</span>
+            <input id="timer" class="timer" type="number" value="100">
+
+            <select class="timerOption" id="timerOption">
+                <option value="Second">Second</option>
+                <option value="Minute" selected>Minute</option>
+                <option value="hour">Hour</option>
+            </select>
+        </div>
+       
+    </div>
+
+    <div class="homeButton">
+          
+        <div>
             <button class="buttons" id="homeButton">Home </button>
+        </div>
         </div>
         <div class="rotationalButton">     
             <button class="buttons" id="leftButton">Left rotate</button>
             <button class="buttons" id="stopButton">Stop</button>
             <button class="buttons" id="rightButton">Right rotate</button>
-        </div>
+    </div>
 </div>
     
 <div class="panel" id="Graph">
