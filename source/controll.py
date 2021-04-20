@@ -16,7 +16,7 @@ class controll:
         self.__con.setDaemon(True)
         self.__con.start()
         
-        self.poslog = posLogger(self, 1)
+        self.poslog = posLogger(self.__con, self.comdata, 1, self.commands.GAP)
         self.poslog.setDaemon(True)
         self.poslog.start()
         self.logpos = False
@@ -27,8 +27,8 @@ class controll:
     # Probably not needed as this will all go in one thread, therefore 
     # it is synced.
     def runCommand(self, command):
-        self.lock.acquire()
         self.checkLogging()
+        self.__con.tlock.acquire()
         self.comdata.newCommand(command)
         self.__con.newComEv.set()
         self.__con.replyReadyEv.wait() # Can set a timeout. TODO
@@ -36,10 +36,10 @@ class controll:
         #TODO: process the reply and send information to frontend.
         self.handleReply()
         self.__con.replyReadyEv.clear()
-        self.lock.release()
+        self.__con.tlock.release()
     
     def checkLogging(self):
-        if self.logpos:
+        if self.logpos and self.poslog.newRunEV.is_set():
             return
         self.poslog.newRunEV.set()
     

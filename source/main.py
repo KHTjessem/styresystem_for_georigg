@@ -1,7 +1,6 @@
 import eel
 import sys
 import random
-import numpy
 
 from controll import controll
 from GUIcomEvents import eventsList
@@ -25,7 +24,7 @@ def stop():
 
 @eel.expose
 def getDataNow():
-    return cont.poslog.posData.getAllData()
+    return cont.poslog.posData.getLatestData()
 
 @eel.expose
 def calcVelRPM(rpm):

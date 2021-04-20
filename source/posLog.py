@@ -3,10 +3,12 @@ import time
 
 
 class posLogger(threading.Thread):
-    def __init__(self, cont_ref, waitTime):
+    def __init__(self, conn_ref, comData, waitTime, gap):
         threading.Thread.__init__(self)
-        self.__cont = cont_ref
+        self.__conn = conn_ref
+        self.comData = comData
         
+        self.gapCom = gap
         self.newRunEV = threading.Event()
         self.ev = threading.Event()
         self.posData = posData()
@@ -27,12 +29,21 @@ class posLogger(threading.Thread):
     
     def work(self):
         while self.newRunEV.is_set():
-            pos = self.__cont.getActualPosition()
             t = self.__startTime - time.time()
+            pos = self.getPos()
             self.posData.newEntry(self.ent(pos, t))
             print(f"newpos: {pos}, at {t} s")
             time.sleep(self.waitTime)
 
+    def getPos(self):
+        self.__conn.tlock.acquire()
+        self.comData.newCommand(self.gapCom)
+        self.__conn.newComEv.set()
+        self.__conn.replyReadyEv.wait()
+        pos = self.comData.getReply()
+        self.__conn.replyReadyEv.clear()
+        self.__conn.tlock.release()
+        return pos.value
 
     
     def newRun(self):
@@ -50,7 +61,7 @@ class posData:
     def __init__(self):
         self.lock = threading.Lock()
         
-        self.__currentRun = 0
+        self.__currentRun = -1
         self.__data = []
 
     def newEntry(self, ent):
@@ -75,8 +86,17 @@ class posData:
     def getLatestData(self):
         self.lock.acquire()
         d = self.__data[self.__currentRun]
+        pos = [None]*len(d)
+        sec = [None]*len(d)
+        
+        indx = 0
+        for x in d:
+            pos[indx] = x.pos
+            sec[indx] = x.sec
+            indx += 1
+            
         self.lock.release()
-        return d
+        return [sec, pos]
 
 from dataclasses import dataclass
 

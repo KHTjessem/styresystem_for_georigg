@@ -39,7 +39,7 @@ class reply:
         self.module_address = module_address
         self.status = status
         self.command_number = command_number
-        self.value = value #4 bytes
+        self.value = int.from_bytes(value, byteorder="big") #4 bytes
         self.checksum = checksum
     
     def test(self):

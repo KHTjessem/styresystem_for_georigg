@@ -7,6 +7,7 @@ import atexit
 class connection(threading.Thread):
     def __init__(self, comData):
         threading.Thread.__init__(self)
+        self.tlock = threading.Lock()
 
         comport = findComPort()
         self.__serialCon = serial.Serial(comport, timeout=1)
