@@ -1,5 +1,6 @@
 import comSerial
 from comStructs import command
+from posLog import posLogger
 import commands as definedCommands
 import threading
 
@@ -7,17 +8,27 @@ class controll:
     def __init__(self, events):
         self.commands = definedCommands.commands()
         self.comdata = comData()
+        self.lock = threading.Lock() # Needed so only one commands runs at a time
         self.events = events
         self.events['updStatus'].trigger(111)
+
         self.__con = comSerial.connection(self.comdata)
         self.__con.setDaemon(True)
         self.__con.start()
+        
+        self.poslog = posLogger(self, 1)
+        self.poslog.setDaemon(True)
+        self.poslog.start()
+        self.logpos = False
+
         self.events['updStatus'].trigger(222)
 
     # TODO: Might need a lock to make sure only one event at a time
     # Probably not needed as this will all go in one thread, therefore 
     # it is synced.
     def runCommand(self, command):
+        self.lock.acquire()
+        self.checkLogging()
         self.comdata.newCommand(command)
         self.__con.newComEv.set()
         self.__con.replyReadyEv.wait() # Can set a timeout. TODO
@@ -25,6 +36,12 @@ class controll:
         #TODO: process the reply and send information to frontend.
         self.handleReply()
         self.__con.replyReadyEv.clear()
+        self.lock.release()
+    
+    def checkLogging(self):
+        if self.logpos:
+            return
+        self.poslog.newRunEV.set()
     
     def handleReply(self):
         pass #TODO
@@ -32,19 +49,24 @@ class controll:
 
 
     def rotate_right(self, velocity):
+        self.logpos = True
         self.commands.ROR.newValue(velocity)
         self.runCommand(self.commands.ROR)
 
     def rotate_left(self, velocity):
+        self.logpos = True
         self.commands.ROL.newValue(velocity)
         self.runCommand(self.commands.ROL)
     
     def stop(self):
+        self.logpos = False
         self.runCommand(self.commands.MST)
+        self.poslog.newRunEV.clear()
     
 
     def getActualPosition(self):
         self.runCommand(self.commands.GAP)
+        return self.comdata.getReply() #TODO: Make sure it will always get right reply.
 
 
 class comData:

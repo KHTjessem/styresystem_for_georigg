@@ -1,6 +1,7 @@
 import eel
 import sys
 import random
+import numpy
 
 from controll import controll
 from GUIcomEvents import eventsList
@@ -22,8 +23,15 @@ def rotate_left(velocity):
 def stop():
     cont.stop()
 
+@eel.expose
+def getDataNow():
+    return cont.poslog.posData.getAllData()
 
-
+@eel.expose
+def calcVelRPM(rpm):
+    vel = round((rpm * 2**3 *200 * 2**8 *2048 * 32)/(16*10**6 * 60))
+    rpm = (16*10**6 * vel * 60)/(2**3 * 200* 2**8 *2048 * 32)
+    return [vel, rpm]
 
 def close_callback(route, websockets):
     if not websockets:
