@@ -53,4 +53,14 @@ function export_chart() {
 // Trigger the download
    a.click();
 }
-document.getElementById("exportchartimg").addEventListener("click", export_chart)
+document.getElementById("exportchartimg").addEventListener("click", export_chart);
+
+function getDataNow() {
+    d = eel.getDataNow()(handleRespData);
+}
+document.getElementById("getDataNow").addEventListener("click", getDataNow);
+
+var DATA = null;
+function handleRespData(data) {
+    DATA = data
+}
