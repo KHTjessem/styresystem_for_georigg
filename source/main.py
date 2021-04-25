@@ -37,7 +37,7 @@ def calcVelRPM(rpm):
     """
     vel = round((rpm * 2**3 *200 * 2**8 *2048 * 32)/(16*10**6 * 60))
     rpm = (16*10**6 * vel * 60)/(2**3 * 200* 2**8 *2048 * 32)
-    return [vel, rpm]
+    return [vel, round(rpm, 2)]
 
 # def close_callback(route, websockets):# TODO: probebly not needed. not currently in use
 #     if not websockets:
