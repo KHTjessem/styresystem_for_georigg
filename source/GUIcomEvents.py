@@ -14,9 +14,11 @@ class eventsList:
 
 
     def updStatusText(self, text):
+        """Updates status text on GUI"""
         self.eel.updStatusText(text)
 
     def updStatus(self, status):
+        """Updates the status text with 'status' code"""
         self.eel.updStatus(StatusDict[status])
 
 

@@ -1,7 +1,7 @@
 import threading
 import time
 
-
+# TODO: when collecting its position, send this to frontends position tracker.
 class posLogger(threading.Thread):
     def __init__(self, conn_ref, comData, waitTime, gap):
         threading.Thread.__init__(self)
@@ -19,6 +19,7 @@ class posLogger(threading.Thread):
     
 
     def run(self):
+        """Main running loop of thread"""
         while True:
             print("ready to log")
             self.newRunEV.wait()
@@ -28,6 +29,7 @@ class posLogger(threading.Thread):
             self.newRunEV.clear()
     
     def work(self):
+        """Threads main workload"""
         while self.newRunEV.is_set():
             t = time.time() - self.__startTime
             pos = self.getPos()
@@ -36,6 +38,7 @@ class posLogger(threading.Thread):
             time.sleep(self.waitTime)
 
     def getPos(self):
+        """Gets the position of the enigne in microsteps"""
         self.__conn.tlock.acquire()
         self.comData.newCommand(self.gapCom)
         self.__conn.newComEv.set()
@@ -47,17 +50,19 @@ class posLogger(threading.Thread):
 
     
     def newRun(self):
+        """Start from 0 again"""
         self.posData.newRun()
         self.__startTime = time.time()
 
 
     def stop(self):
+        """Stops the main loop"""
         self.newRunEV.clear()
 
-# TODO: Check if actually need lock.
-# Might only need to access data when engine is not running,
-# so no new data being added while retrieving
+
+# TODO: Maybe store position log in a csv file.
 class posData:
+    """A class for keeping track of engines position"""
     def __init__(self):
         self.lock = threading.Lock()
         
@@ -65,18 +70,21 @@ class posData:
         self.__data = []
 
     def newEntry(self, ent):
+        """Adds a new position entry to self.currentRun index of list"""
         self.lock.acquire()
         print(ent)
         self.__data[self.__currentRun].append(ent)
         self.lock.release()
 
     def newRun(self):
+        """New run entry in list"""
         self.lock.acquire()
         self.__data.append([])
         self.__currentRun += 1
         self.lock.release()
     
     def getAllData(self):
+        """Returns all runs position data"""
         self.lock.acquire()
         k = self.__data
         print(k)
@@ -84,6 +92,7 @@ class posData:
         return k
     
     def getLatestData(self):
+        """Get latest runs position data"""
         self.lock.acquire()
         d = self.__data[self.__currentRun]
         pos = [None]*len(d)

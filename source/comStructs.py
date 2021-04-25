@@ -13,9 +13,11 @@ class command:
         calckChecksum(self)
     
     def getByteArray(self):
+        """Returns its own values in a bytearray as specified in TMCM-1611 datasheet"""
         return gba(self)
     
     def newValue(self, value):
+        """Set a new value for command"""
         self.value = value
         calckChecksum(self) #update checksum
 
@@ -25,7 +27,8 @@ def gba(obj):
         obj.module_address, obj.command_number,
         obj.type_number, obj.motor_bank, obj.value, obj.checksum)
 
-def calckChecksum(obj):
+def calckChecksum(obj): #TODO: its just a sum, probebly no need for a slow loop
+    """Calculates a objects checksum and sets it"""
     arr = struct.pack('>BBBBi', obj.module_address, obj.command_number, 
                     obj.type_number, obj.motor_bank, obj.value)
     csum = 0
