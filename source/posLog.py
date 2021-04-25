@@ -29,7 +29,7 @@ class posLogger(threading.Thread):
     
     def work(self):
         while self.newRunEV.is_set():
-            t = self.__startTime - time.time()
+            t = time.time() - self.__startTime
             pos = self.getPos()
             self.posData.newEntry(self.ent(pos, t))
             print(f"newpos: {pos}, at {t} s")
@@ -91,8 +91,8 @@ class posData:
         
         indx = 0
         for x in d:
-            pos[indx] = x.pos
-            sec[indx] = x.sec
+            pos[indx] = x.pos/10240
+            sec[indx] = round(x.sec, 1)
             indx += 1
             
         self.lock.release()

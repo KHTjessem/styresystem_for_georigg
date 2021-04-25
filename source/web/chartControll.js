@@ -2,10 +2,10 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Red'],
+        labels: [],
         datasets: [{
-            label: '# of Votes',
-            data: [0],
+            label: 'mm',
+            data: [],
             lineTension: 0,
             //cubicInterpolationMode: 'monotone',
             backgroundColor: '#13A3A4',
@@ -26,8 +26,12 @@ var myChart = new Chart(ctx, {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
-                }
+                    beginAtZero: false
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Time'
+                  }
             }]
         }
     }
@@ -63,4 +67,7 @@ document.getElementById("getDataNow").addEventListener("click", getDataNow);
 var DATA = null;
 function handleRespData(data) {
     DATA = data
+    for (i = 0; i < DATA[0].length; i++) {
+        addData(DATA[0][i], DATA[1][i])
+      }
 }
