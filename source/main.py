@@ -1,6 +1,7 @@
 import eel
 import sys
 import random
+import platform
 
 from controll import controll
 from GUIcomEvents import eventsList
@@ -45,5 +46,22 @@ def calcVelRPM(rpm):
 #         cont.close()
 #         exit()
 
-eel.start('index.html')
+
+
+eel_kwargs = dict(
+    host='localhost',
+    port=8080,
+    size=(1280, 800),
+)
+
+# Browser fallback for windows.
+# All windows machine should come with edge
+try:
+    eel.start('index.html', **eel_kwargs)
+except EnvironmentError:
+    # If Chrome isn't found, fallback to Microsoft Edge on Win10 or greater
+    if sys.platform in ['win32', 'win64'] and int(platform.release()) >= 10:
+        eel.start('index.html', mode='edge', **eel_kwargs)
+    else:
+        raise
 
