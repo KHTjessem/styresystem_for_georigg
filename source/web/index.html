@@ -3,30 +3,36 @@
 <head>
     <meta charset='utf-8'>
     <title>Georigg</title>
-    <link rel='stylesheet' type='text/css' media='screen' href='./style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./style2.css'>
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>  
-    <header>
-        <div class="dropdown" style="float:left;">
-            <button class="status">Status</button>
+    <header class="space-between">
+        <!-- <div class="dropdown" style="float:left;">
+            
+            <button class="mode">Change Mode</button>
             <div class="dropdown-content" style="left:0;">
               <a onclick="hideStatus()">Velocity-Panel</a>
               <a onclick="hidePosition()">Position-Panel</a>
               <a onclick="hide()">Graph</a>
 
             </div>
-          </div>
-
-          <div class="dropdown" style="float:left;">
-            <button class="status">Angle</button>
+          </div> -->
+          <!-- <div class="dropdown" style="float:left;">
+            <button class="mode">Angle</button>
             <div class="dropdown-content" style="left:0;">
               <a >30 Degrees</a>
               <a >60 Degrees</a>
               <a >90 Degrees</a>
             </div>
-          </div>
+          </div> -->
           
+          <div class="shadow" id="navBar">
+            <button onclick="hideStatus()">Velocity mode</button>
+            <button onclick="hidePosition()">Position panel</button>
+            <button onclick="hide()">Graph</button>
+          </div>
+
         <div class="emBtn" >
         <button class="dropdown" id= "emergency">Emergency-Stop</button>
         </div>
@@ -34,20 +40,20 @@
 
 <div class="panel"> 
     <div id="statusSignal">
-        <div class="panel" id="status-panel">
+        <div class="shadow" id="status-panel">
             <span>Status:</span>
             <li id="status-text">Feedback from motor</li>
         </div>  
-        <div class="signal"> 
-            <div class="light" id="light"> </div>
+        <div id="signal"> 
+            <div id="light"> </div>
             <div class="textlight">Signal light for motor</div>
         </div>
     </div>
     
-    <div class="sliderbox"  id="slidPosition">
+    <div class="sliderbox shadow"  id="slidPosition">
         <div class="positionWrap">
             <div class="positionValue" id="PositionValue"></div>
-            <input type="range" min="-130" max="130" value="0" step="1" class="PositionSlider" id="positionRange" disabled>
+            <input type="range" min="-130" max="130" value="0" step="0.01" class="PositionSlider" id="positionRange" disabled>
           </div>
       </div>
 
@@ -57,53 +63,61 @@
 
 <div class="panel" id="position-panel">
 
-    <div class="goPosition">
-    <input type="number" min="1" max="1000"  class="input"     id="positionInput">
+    <div class="goPosition flex-col-down">
+        <span>
+            <input type="number" min="1" max="1000"  class="number-textbox"  id="positionInput"> mm
+        </span>
         <div>
-        <button class="buttons" id="absoluteBtn">Position absolute</button>
-        <button class="buttons" id="relativeBtn">Position relative </button>
+        <button class="buttons" id="absoluteBtn">Go to absolute</button>
+        <button class="buttons" id="relativeBtn">Displace relative </button>
         </div>
     </div>
 
-    <div  class="setPosition">
-        <button class="buttons" id="setHome">Set Home</button>
-        <button class="buttons" id="Homebtn">Home</button>
+    <div  class="flex-col-down space-between">
+        <div class="center-content">
+            <span>Max speed</span>
+            <input type="number" class="number-textbox" name="max speed" id=""> mm/h
+        </div>
+        <div class="setPosition">
+            <button class="buttons" id="setHome">Set Home</button>
+            <button class="buttons" id="Homebtn">Go to Home</button>
+        </div>
     </div>
-    <div class="rotatebtn">
+    <div class="rotatebtns">
         <button class="btnRot" id="LeftRBtn">Left rotate</button>
         <button class="btnRot" id="rightRBtn">Right rotate</button>
-
     </div>
    
 </div>
    
-<div class="panel" id="velocity-panel">
-    <div class="sliderDiv">
-        <div class="speed">
-        <span>You want 
-            <input type="number" min="1" class="input" id="relVelocity"> 
-            mm/h but you gonna get 
-            <input type="number" disabled class="input" id="GetInput"> mm/h 
+<div class="panel flex-col-down" id="velocity-panel">
+
+    <div class="center-content">
+        <span>Max run time</span>
+        <input id="timer" type="number" value="100">
+
+        <select id="timerOption">
+            <option value="Second">Second</option>
+            <option value="Minute" selected>Minute</option>
+            <option value="hour">Hour</option>
+        </select>
+    </div>
+
+    <div class="sliderDiv flex-col-down shadow">
+        <div class="center-content">
+        <span>You want
+            <input type="number" min="1" class="number-textbox" id="wantVel"> 
+            mm/h, engine can provide an estimated
+            <input type="number" disabled class="number-textbox" value="60.12" id="ClosestVel"> mm/h 
+            <input hidden type="number" id="engineVelValue" value="160">
         </span>  
         </div>
 
-        <input type="range" min="1" max="120" value="60" class="slider" id="slider">
+        <input type="range" min="1" max="120" value="60" class="slider" id="velocitySlider">
             
     </div>
 
-    <div>
-        <div>
-            <span>Max run time</span>
-            <input id="timer" class="timer" type="number" value="100">
 
-            <select class="timerOption" id="timerOption">
-                <option value="Second">Second</option>
-                <option value="Minute" selected>Minute</option>
-                <option value="hour">Hour</option>
-            </select>
-        </div>
-       
-    </div>
 
     <div class="homeButton">
           
