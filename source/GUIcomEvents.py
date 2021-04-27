@@ -7,9 +7,12 @@ class eventsList:
         u = Events()
         u.trigger += self.updStatus
         a.trigger += self.updStatusText
+        a.updatePosition += self.updPosition # TODO: testing if the events can be one object
         self.evDict = {
             'updStatusText': a,
-            'updStatus': u
+            'updStatus': u,
+            'update': a
+
         }
 
 
@@ -18,10 +21,12 @@ class eventsList:
         self.eel.updStatusText(text)
 
     def updStatus(self, status):
-        """Updates the status text with 'status' code"""
+        """Updates the status text using 'status' code"""
         self.eel.updStatus(StatusDict[status])
 
-
+    def updPosition(self, posInmm):
+        """Update position on GUI"""
+        self.eel.updatePosition(posInmm)
 
 StatusDict = {
     # self defined

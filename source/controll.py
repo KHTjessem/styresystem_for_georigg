@@ -18,7 +18,7 @@ class controll:
         self.__con.start()
         
         # Position trakcer & time keeper on its own thread.
-        self.poslog = posLogger(self.__con, self.comdata, 1, self.commands.GAP)
+        self.poslog = posLogger(self.__con, self.comdata, 1, self.commands.GAP, self.events)
         self.poslog.setDaemon(True)
         self.poslog.start()
         self.logpos = False

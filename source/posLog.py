@@ -3,10 +3,11 @@ import time
 
 # TODO: when collecting its position, send this to frontends position tracker.
 class posLogger(threading.Thread):
-    def __init__(self, conn_ref, comData, waitTime, gap):
+    def __init__(self, conn_ref, comData, waitTime, gap, events):
         threading.Thread.__init__(self)
         self.__conn = conn_ref
         self.comData = comData
+        self.evs = events
         
         self.gapCom = gap
         self.newRunEV = threading.Event()
@@ -35,6 +36,7 @@ class posLogger(threading.Thread):
             pos = self.getPos()
             self.posData.newEntry(self.ent(pos, t))
             print(f"newpos: {pos}, at {t} s")
+            self.evs['update'].updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
             time.sleep(self.waitTime)
 
     def getPos(self):
