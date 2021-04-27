@@ -1,13 +1,13 @@
 // Python functions through EEL
 function Left (){
-    val= document.getElementById("slider").value;
+    val= document.getElementById("engineVelValue").value;
     val = parseInt(val);
     eel.rotate_left(val);
 }
 document.getElementById("leftButton").addEventListener('click', Left)
 
 function right (){
-    val = document.getElementById("slider").value;
+    val = document.getElementById("engineVelValue").value;
     val = parseInt(val);
     eel.rotate_right(val);
 }
