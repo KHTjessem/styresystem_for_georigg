@@ -10,7 +10,7 @@ class controll:
         self.comdata = comData()
         self.lock = threading.Lock() # Needed so only one commands runs at a time
         self.events = events
-        self.events['updStatus'].trigger(111)
+        self.events.evs.updStatus(111)
 
         # Connection on its own thread
         self.__con = comSerial.connection(self.comdata)
@@ -23,7 +23,7 @@ class controll:
         self.poslog.start()
         self.logpos = False
 
-        self.events['updStatus'].trigger(222)
+        self.events.evs.updStatus(222)
 
     # TODO: Might need a lock to make sure only one event at a time
     # Probably not needed as this will all go in one thread, therefore 
@@ -35,7 +35,7 @@ class controll:
         self.comdata.newCommand(command)
         self.__con.newComEv.set()
         self.__con.replyReadyEv.wait() # Can set a timeout. TODO
-        self.events['updStatus'].trigger(command.command_number)
+        self.events.evs.updStatus(command.command_number)
         #TODO: process the reply and send information to frontend.
         self.handleReply()
         self.__con.replyReadyEv.clear()

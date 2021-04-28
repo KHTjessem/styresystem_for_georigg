@@ -3,17 +3,11 @@ from events import Events
 class eventsList:
     def __init__(self, eel):
         self.eel = eel
-        a = Events()
-        u = Events()
-        u.trigger += self.updStatus
-        a.trigger += self.updStatusText
-        a.updatePosition += self.updPosition # TODO: testing if the events can be one object
-        self.evDict = {
-            'updStatusText': a,
-            'updStatus': u,
-            'update': a
 
-        }
+        evs = Events()
+        evs.updStatus += self.updStatus
+        evs.updStatusText += self.updStatusText
+        evs.updatePosition += self.updPosition
 
 
     def updStatusText(self, text):
