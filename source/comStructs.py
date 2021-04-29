@@ -27,13 +27,11 @@ def gba(obj):
         obj.module_address, obj.command_number,
         obj.type_number, obj.motor_bank, obj.value, obj.checksum)
 
-def calckChecksum(obj): #TODO: its just a sum, probebly no need for a slow loop
+def calckChecksum(obj): #TODO: check if works
     """Calculates a objects checksum and sets it"""
     arr = struct.pack('>BBBBi', obj.module_address, obj.command_number, 
                     obj.type_number, obj.motor_bank, obj.value)
-    csum = 0
-    for b in arr:
-        csum += int(b)
+    csum = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6] + arr[7]
     obj.checksum = csum
 
 class reply:

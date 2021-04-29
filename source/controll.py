@@ -13,7 +13,7 @@ class controll:
         self.events.evs.updStatus(111)
 
         # Connection on its own thread
-        self.__con = comSerial.connection(self.comdata)
+        self.__con = comSerial.connection(self.comdata, self.commands.DriveStatusFlags)
         self.__con.setDaemon(True)
         self.__con.start()
         
@@ -25,9 +25,6 @@ class controll:
 
         self.events.evs.updStatus(222)
 
-    # TODO: Might need a lock to make sure only one event at a time
-    # Probably not needed as this will all go in one thread, therefore 
-    # it is synced.
     def runCommand(self, command):
         """Runs the command, response is in self.comdata"""
         self.checkLogging()
@@ -36,7 +33,6 @@ class controll:
         self.__con.newComEv.set()
         self.__con.replyReadyEv.wait() # Can set a timeout. TODO
         self.events.evs.updStatus(command.command_number)
-        #TODO: process the reply and send information to frontend.
         self.handleReply()
         self.__con.replyReadyEv.clear()
         self.__con.tlock.release()
@@ -75,7 +71,6 @@ class controll:
     def getActualPosition(self):
         """Collects the enignes position in microsteps. TODO: handle reply"""
         self.runCommand(self.commands.GAP)
-        return self.comdata.getReply() #TODO: Make sure it will always get right reply.
 
 
 class comData:

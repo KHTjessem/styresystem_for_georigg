@@ -5,12 +5,15 @@ import threading
 import atexit
 
 class connection(threading.Thread):
-    def __init__(self, comData):
+    def __init__(self, comData, statusCommand):
         threading.Thread.__init__(self)
         self.tlock = threading.Lock()
+        self.statCommand = statusCommand
 
-        comport = findComPort()
-        self.__serialCon = serial.Serial(comport, timeout=1)
+        self.comport = findComPort()
+        self.__serialCon = None
+        self.connect()
+
         self.comdata = comData
         self.newComEv = threading.Event()
         self.replyReadyEv = threading.Event()
@@ -19,12 +22,30 @@ class connection(threading.Thread):
     def write(self, data):
         """Writes the data variable on the serial connection"""
         self.__serialCon.write(data)
-        #TODO: set timeout, handle what happens.
         resp = self.__serialCon.read(size=9) #Reply struct is 9 bytes
         if len(resp) < 9:
-            return 'Something went wrong'
+            return self.checkConnection()
         return comStructs.reply(resp[0], resp[1], resp[2], resp[3], resp[4:8], resp[8])
 
+    def checkConnection(self):
+        """Checks if engine has some error or lost connection"""
+        self.__serialCon.write(self.statCommand.getByteArray())
+        resp = self.__serialCon.read(size=9) #TMCL_firmware_manual page 107 for flags
+        if len(resp) == 9:
+            return resp
+        # Attempt reconnect
+        self.close()
+        self.connect()
+
+        self.__serialCon.write(self.statCommand.getByteArray())
+        resp = self.__serialCon.read(size=9)
+        if len(resp) == 9:
+            return "Unable to connect" # Last ditch effort is to restart thread.
+
+
+
+    def connect(self):
+        self.__serialCon = serial.Serial(self.comport, timeout=0.5)
     def close(self):
         """Closes the serial connection"""
         self.__serialCon.close()

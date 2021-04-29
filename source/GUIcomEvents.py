@@ -4,10 +4,10 @@ class eventsList:
     def __init__(self, eel):
         self.eel = eel
 
-        evs = Events()
-        evs.updStatus += self.updStatus
-        evs.updStatusText += self.updStatusText
-        evs.updatePosition += self.updPosition
+        self.evs = Events()
+        self.evs.updStatus += self.updStatus
+        self.evs.updStatusText += self.updStatusText
+        self.evs.updatePosition += self.updPosition
 
 
     def updStatusText(self, text):

@@ -1,7 +1,7 @@
 import threading
 import time
 
-# TODO: when collecting its position, send this to frontends position tracker.
+
 class posLogger(threading.Thread):
     def __init__(self, conn_ref, comData, waitTime, gap, events):
         threading.Thread.__init__(self)
