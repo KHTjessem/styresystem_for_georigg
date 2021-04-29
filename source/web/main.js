@@ -19,6 +19,19 @@ function stop (){
 document.getElementById("stopButton").addEventListener('click', stop);
 
 
+function moveEngRel() {
+    dist = document.getElementById('positionInput').value;
+    dist = parseFloat(dist)
+    eel.moveto_rel(dist);
+}
+document.getElementById('relativeBtn').addEventListener('click', moveEngRel)
+
+function moveEngAbs() {
+    pos = document.getElementById('positionInput').value;
+    pos = parseFloat(pos)
+    eel.moveto_abs(pos);
+}
+document.getElementById('absoluteBtn').addEventListener('click', moveEngAbs)
 
 // EEL exported functions.
 eel.expose(updStatusText)

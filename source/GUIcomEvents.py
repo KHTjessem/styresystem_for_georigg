@@ -33,5 +33,6 @@ StatusDict = {
     # Based on Command number from TMCL firmware manual 1.42.
     1: [20, 'Rotating right'],
     2: [20, 'Rotating left'],
-    3: [10, 'Stoped']
+    3: [10, 'Stoped'],
+    4: [20, 'Moving to new position']
 }

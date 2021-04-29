@@ -16,6 +16,10 @@ class commands:
 
         # Get and set information
         self.SAP = command(self.madd, 5, 1, self.mbank, 0) # Set axis parameter
+        self.ChangePdiv = command(self.madd, 5, 154, self.mbank, 0)
+
+
+
         self.GAP = command(self.madd, 6, 1, self.mbank, 0) # Get axis parameter
             # TMCL_firmware_manual page 32 for full type info
             # https://www.trinamic.com/products/modules/details/tmcm-1161/

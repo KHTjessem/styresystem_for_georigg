@@ -35,7 +35,7 @@ class posLogger(threading.Thread):
             t = time.time() - self.__startTime
             pos = self.getPos()
             self.posData.newEntry(self.ent(pos, t))
-            print(f"newpos: {pos}, at {t} s")
+         #   print(f"newpos: {pos}, at {t} s")
             self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
             time.sleep(self.waitTime)
 
@@ -74,7 +74,7 @@ class posData:
     def newEntry(self, ent):
         """Adds a new position entry to self.currentRun index of list"""
         self.lock.acquire()
-        print(ent)
+        #print(ent)
         self.__data[self.__currentRun].append(ent)
         self.lock.release()
 
@@ -89,7 +89,7 @@ class posData:
         """Returns all runs position data"""
         self.lock.acquire()
         k = self.__data
-        print(k)
+        #print(k)
         self.lock.release()
         return k
     

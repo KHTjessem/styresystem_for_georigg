@@ -18,7 +18,7 @@ class controll:
         self.__con.start()
         
         # Position trakcer & time keeper on its own thread.
-        self.poslog = posLogger(self.__con, self.comdata, 1, self.commands.GAP, self.events)
+        self.poslog = posLogger(self.__con, self.comdata, 0.2, self.commands.GAP, self.events)
         self.poslog.setDaemon(True)
         self.poslog.start()
         self.logpos = False
@@ -61,12 +61,36 @@ class controll:
         self.commands.ROL.newValue(velocity)
         self.runCommand(self.commands.ROL)
     
+    def moveto_abs(self, pos):
+        """Move to absolute position. pos is in microsteps"""
+        self.commands.MVP.newTypeAndValue(0, pos)
+        self.runCommand(self.commands.MVP)
+    
+    def moveto_rel(self, amount):
+        """Moves the engine relative"""
+        self.commands.MVP.newTypeAndValue(1, amount)
+        self.runCommand(self.commands.MVP)
+    
     def stop(self):
         """Stops the engine, stops logpos"""
         self.logpos = False
         self.runCommand(self.commands.MST)
         self.poslog.newRunEV.clear()
     
+    def setPdiv(self, pdiv):
+        """Change the modules Pulse divisor"""
+        self.commands.ChangePdiv.newValue(pdiv)
+        self.runCommand(self.commands.ChangePdiv)
+
+    def setHome(self):
+        """Sets current position as new home position"""
+        self.commands.SAP.newTypeAndValue(1, 0)
+        self.runCommand(self.commands.SAP)
+    
+    def setMaxSpeedPmode(self, maxVel):
+        """Set the maximum speed in positioning mode"""
+        self.commands.SAP.newTypeAndValue(4, maxVel)
+        self.runCommand(self.commands.SAP)
 
     def getActualPosition(self):
         """Collects the enignes position in microsteps. TODO: handle reply"""

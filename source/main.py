@@ -22,6 +22,19 @@ def rotate_left(velocity):
     """Makes the engine rotate left vith a speed of velocity (0-2047)"""
     cont.rotate_left(velocity)
 @eel.expose
+def moveto_rel(dist):
+    """Move engine with relative distance. provide dist in mm"""
+    dist = round(dist*10240) # convert to microsteps
+    print(f'rel move: {dist}')
+    cont.moveto_rel(dist)
+@eel.expose
+def moveto_abs(pos):
+    """Moves the engine to absolute position. pos is in mm"""
+    pos = round(pos*10240) # convert to microsteps
+    print(f'moving to {pos}')
+    cont.moveto_abs(pos)
+
+@eel.expose
 def stop():
     """Stops the enigne"""
     cont.stop()

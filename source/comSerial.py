@@ -21,8 +21,10 @@ class connection(threading.Thread):
     
     def write(self, data):
         """Writes the data variable on the serial connection"""
+        print(f'Writing command: {data}')
         self.__serialCon.write(data)
         resp = self.__serialCon.read(size=9) #Reply struct is 9 bytes
+        print(f'Response: {resp}')
         if len(resp) < 9:
             return self.checkConnection()
         return comStructs.reply(resp[0], resp[1], resp[2], resp[3], resp[4:8], resp[8])

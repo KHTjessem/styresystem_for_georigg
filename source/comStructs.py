@@ -21,17 +21,26 @@ class command:
         self.value = value
         calckChecksum(self) #update checksum
 
+    def newTypeAndValue(self, t, v):
+        self.type_number = t
+        self.value = v
+        calckChecksum(self)
+
+
 def gba(obj):
     #Byte Byte Byte Byte Integer(4 bytes) Byte
     return struct.pack('>BBBBiB',
         obj.module_address, obj.command_number,
         obj.type_number, obj.motor_bank, obj.value, obj.checksum)
 
-def calckChecksum(obj): #TODO: check if works
+def calckChecksum(obj):
     """Calculates a objects checksum and sets it"""
     arr = struct.pack('>BBBBi', obj.module_address, obj.command_number, 
                     obj.type_number, obj.motor_bank, obj.value)
     csum = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6] + arr[7]
+    while csum > 255:
+        csum -= 256
+    print(csum)
     obj.checksum = csum
 
 class reply:
