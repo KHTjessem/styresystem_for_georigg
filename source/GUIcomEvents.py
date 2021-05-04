@@ -8,7 +8,12 @@ class eventsList:
         self.evs.updStatus += self.updStatus
         self.evs.updStatusText += self.updStatusText
         self.evs.updatePosition += self.updPosition
+        self.evs.notConneted += self.notConneted
 
+    
+    def notConneted(self):
+        """Fire when engine is no longer connected"""
+        self.eel.notConnected()
 
     def updStatusText(self, text):
         """Updates status text on GUI"""
@@ -33,6 +38,6 @@ StatusDict = {
     # Based on Command number from TMCL firmware manual 1.42.
     1: [20, 'Rotating right'],
     2: [20, 'Rotating left'],
-    3: [10, 'Stoped'],
+    3: [10, 'Stopped'],
     4: [20, 'Moving to new position']
 }

@@ -125,12 +125,6 @@ button:hover{
     -webkit-appearance: none;
     margin-top: -8px;
   }
-  .positionWrap{
-    width: 80%;
-    margin: auto;
-
-    position: relative;
-  }
   .positionValue{
     position: absolute;
     top: -50%;
@@ -149,13 +143,6 @@ button:hover{
     transform: translate(-50%, 0);
     border-radius: 6px;
   }
-  .sliderbox{
-    display:flex;
-    flex-direction: row;
-    border: #292F3D solid;
-    padding-top: 20pt;
-    margin: 10px 2px;
-}
 
 
 /* Slider for velocity panel*/
@@ -195,21 +182,21 @@ button:hover{
     width: 60px;
 }
 
+#reconnectBtn{
+    background-color: #D64933;
+    color: white;
+}
+
 
 /* Status panel specifics */
 #statusSignal{
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
-    min-height: 40pt;
+    min-height: 40px;
 }
 #status-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     min-height: 40px;
-    width: 50%; 
-    margin-right: 50%;
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: 0;
     border: #292F3D solid;
     padding: 4px;
 }
@@ -229,7 +216,22 @@ button:hover{
     width: 20px;
     height: 20px;
     border: #292F3D solid;
+    margin: auto 0;
+}
+.max-box{
+    margin: 12px;
+}
+.positionWrap{
+    width: 80%;
     margin: auto;
+    margin-top: 25px;
+    position: relative;
+  }
+.sliderbox{
+    display:flex;
+    flex-direction: row;
+    border: #292F3D solid;
+    margin: 10px 2px;
 }
 
 

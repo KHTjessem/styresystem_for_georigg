@@ -26,3 +26,10 @@ function hide(){
     positionPanel.style.display = "none";
     graph.style.display = "block";
 }
+
+
+
+// reconnect button
+function reconnButton() {
+    document.getElementById('reconnectBtn').hidden = false;
+}

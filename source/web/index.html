@@ -8,25 +8,6 @@
 </head>
 <body>  
     <header class="space-between">
-        <!-- <div class="dropdown" style="float:left;">
-            
-            <button class="mode">Change Mode</button>
-            <div class="dropdown-content" style="left:0;">
-              <a onclick="hideStatus()">Velocity-Panel</a>
-              <a onclick="hidePosition()">Position-Panel</a>
-              <a onclick="hide()">Graph</a>
-
-            </div>
-          </div> -->
-          <!-- <div class="dropdown" style="float:left;">
-            <button class="mode">Angle</button>
-            <div class="dropdown-content" style="left:0;">
-              <a >30 Degrees</a>
-              <a >60 Degrees</a>
-              <a >90 Degrees</a>
-            </div>
-          </div> -->
-          
           <div class="shadow" id="navBar">
             <button onclick="hideStatus()">Velocity mode</button>
             <button onclick="hidePosition()">Position panel</button>
@@ -40,32 +21,44 @@
 
 <div class="panel"> 
     <div id="statusSignal">
+        
         <div class="shadow" id="status-panel">
-            <span>Status:</span>
-            <li id="status-text">Feedback from motor</li>
-        </div>  
-        <div id="signal"> 
+            <div style="display: flex; flex-direction: row;">
+                <div>
+                    <span>Status:</span>
+                    <li id="status-text">Feedback from motor</li>
+                </div>
+                <button id="reconnectBtn" hidden>Reconnect</button>
+            </div>
+            <div>
+                
+            </div>
             <div id="light"> </div>
-            <div class="textlight">Signal light for motor</div>
         </div>
     </div>
     
     <div class="sliderbox shadow"  id="slidPosition">
+        <div class="flex-col-down max-box">
+            max left
+            <input type="number" class="number-textbox" name="max speed" id="">
+        </div>
         <div class="positionWrap">
             <div class="positionValue" id="PositionValue"></div>
             <input type="range" min="-130" max="130" value="0" step="0.01" class="PositionSlider" id="positionRange" disabled>
           </div>
+
+          <div class="flex-col-down max-box">
+            max right
+            <input type="number" class="number-textbox" name="max speed" id="">
+        </div>
       </div>
-
-
 </div>
 
 
 <div class="panel" id="position-panel">
-
     <div class="goPosition flex-col-down">
         <span>
-            <input type="number" min="1" max="1000"  class="number-textbox"  id="positionInput"> mm
+            <input type="number" min="1" max="1000" value="1" class="number-textbox"  id="positionInput"> mm
         </span>
         <div>
         <button class="buttons" id="absoluteBtn">Go to absolute</button>
@@ -76,11 +69,11 @@
     <div  class="flex-col-down space-between">
         <div class="center-content">
             <span>Max speed</span>
-            <input type="number" class="number-textbox" name="max speed" id=""> mm/h
+            <input type="number" class="number-textbox" value="10" name="max speed" id=""> mm/h
         </div>
         <div class="setPosition">
-            <button class="buttons" id="setHome">Set Home</button>
-            <button class="buttons" id="Homebtn">Go to Home</button>
+            <button class="buttons" id="setHomebtn">Set Home</button>
+            <button class="buttons" id="goHomebtn">Go to Home</button>
         </div>
     </div>
     <div class="rotatebtns">

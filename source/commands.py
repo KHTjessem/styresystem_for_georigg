@@ -1,6 +1,5 @@
 from comStructs import command
 
-# TODO: implement all controll commands.
 class commands:
     def __init__(self):
         self.madd = 1

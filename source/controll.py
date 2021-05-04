@@ -13,28 +13,46 @@ class controll:
         self.events.evs.updStatus(111)
 
         # Connection on its own thread
-        self.__con = comSerial.connection(self.comdata, self.commands.DriveStatusFlags)
-        self.__con.setDaemon(True)
-        self.__con.start()
+        self.__con = None
+        self.setUpConnection()
         
         # Position trakcer & time keeper on its own thread.
         self.poslog = posLogger(self.__con, self.comdata, 0.2, self.commands.GAP, self.events)
         self.poslog.setDaemon(True)
         self.poslog.start()
         self.logpos = False
-
-        self.events.evs.updStatus(222)
+    
+    def setUpConnection(self):
+        self.__con = comSerial.connection(self.comdata, self.commands.DriveStatusFlags)
+        self.__con.setDaemon(True)
+        self.__con.start()
+        if not self.__con.connected:
+            self.events.evs.notConneted()
+        else:
+            self.events.evs.updStatus(222)
+    
+    def attemptReconnect(self):
+        port = comSerial.findComPort()
+        if port is None:
+            self.events.evs.updStatus(333)
+            self.events.evs.updStatusText("Unable to find engine, is it connected?")
+            self.events.evs.notConnected()
+            return False
+        
 
     def runCommand(self, command):
         """Runs the command, response is in self.comdata"""
-        self.checkLogging()
         self.__con.tlock.acquire()
-        self.comdata.newCommand(command)
-        self.__con.newComEv.set()
-        self.__con.replyReadyEv.wait() # Can set a timeout. TODO
-        self.events.evs.updStatus(command.command_number)
-        self.handleReply()
-        self.__con.replyReadyEv.clear()
+        if self.__con.connected:
+            self.checkLogging()
+            self.comdata.newCommand(command)
+            self.__con.newComEv.set()
+            self.__con.replyReadyEv.wait()
+            self.events.evs.updStatus(command.command_number)
+            self.handleReply()
+            self.__con.replyReadyEv.clear()
+        else:
+            self.events.evs.notConneted()
         self.__con.tlock.release()
     
     def checkLogging(self):
@@ -45,8 +63,10 @@ class controll:
     
     def handleReply(self):
         """Not implemented"""
-        pass #TODO
-        #self.events['updStatusText'].trigger('Success')
+        rep = self.comdata.getReply()
+        if rep == "Not connected to engine":
+            return self.events.evs.notConneted()
+    
 
 
     def rotate_right(self, velocity):
@@ -99,31 +119,28 @@ class controll:
 
 class comData:
     def __init__(self):
-        self.__commands = []
-        self.__prioStop = False
+        self.__command = None
         self.lock = threading.Lock()
 
         self.__reply = None
     
-    def newCommand(self, command): # Potential TODO: command does not need to be a list.
+    def newCommand(self, command):
         """Add command to list."""
         self.lock.acquire()
-        self.__commands.append(command)
+        self.__command = command
         self.lock.release()
     
     def getNextCommand(self):
         """Get the next command to run"""
         self.lock.acquire()
-        if self.__prioStop:
-            raise NotImplementedError # TODO: implement
-        c = self.__commands.pop()
+        c = self.__command
         self.lock.release()
         return c.getByteArray()
     
     def newReply(self, reply):
         """Set the reply"""
         self.lock.acquire()
-        self.__reply = reply # maybe turn __reply into a list?
+        self.__reply = reply
         self.lock.release()
     
     def getReply(self):

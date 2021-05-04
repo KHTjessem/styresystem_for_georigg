@@ -13,6 +13,11 @@ events = eventsList(eel)
 # Engine init
 cont = controll(events)
 
+
+@eel.expose
+def attemptReconnect():
+    cont.attemptReconnect()
+
 @eel.expose
 def rotate_right(velocity):
     """Makes the engine rotate right vith a speed of velocity (0-2047)"""
@@ -33,6 +38,12 @@ def moveto_abs(pos):
     pos = round(pos*10240) # convert to microsteps
     print(f'moving to {pos}')
     cont.moveto_abs(pos)
+
+
+@eel.expose
+def setHome():
+    """Set current engine position as home"""
+    cont.setHome()
 
 @eel.expose
 def stop():

@@ -36,7 +36,8 @@ class posLogger(threading.Thread):
             pos = self.getPos()
             self.posData.newEntry(self.ent(pos, t))
          #   print(f"newpos: {pos}, at {t} s")
-            self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
+            if pos is not None:
+                self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
             time.sleep(self.waitTime)
 
     def getPos(self):
@@ -48,6 +49,8 @@ class posLogger(threading.Thread):
         pos = self.comData.getReply()
         self.__conn.replyReadyEv.clear()
         self.__conn.tlock.release()
+        if isinstance(pos, str):
+            return None
         return pos.value
 
     
