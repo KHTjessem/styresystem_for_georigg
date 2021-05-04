@@ -16,7 +16,7 @@ cont = controll(events)
 
 @eel.expose
 def attemptReconnect():
-    cont.attemptReconnect()
+    return cont.attemptReconnect()
 
 @eel.expose
 def rotate_right(velocity):
@@ -43,7 +43,10 @@ def moveto_abs(pos):
 @eel.expose
 def setHome():
     """Set current engine position as home"""
+    #Firmware manual: 'The actual position of the motor. Stop the motorbefore overwriting it.'
+    cont.stop() 
     cont.setHome()
+    eel.updatePosition(0)
 
 @eel.expose
 def stop():
@@ -55,13 +58,13 @@ def getDataNow(): #TODO: fix it
     return cont.poslog.posData.getLatestData()
 
 @eel.expose
-def calcVelRPM(rpm):
+def calcVelRPM(rpm, pdiv):
     """
     Calculates the rpm that fits, an translates it to engine values.
     Returns [velocity value, rpm value].
     """
-    vel = round((rpm * 2**3 *200 * 2**8 *2048 * 32)/(16*10**6 * 60))
-    rpm = (16*10**6 * vel * 60)/(2**3 * 200* 2**8 *2048 * 32)
+    vel = round((rpm * 2**pdiv *200 * 2**8 *2048 * 32)/(16*10**6 * 60))
+    rpm = (16*10**6 * vel * 60)/(2**pdiv * 200* 2**8 *2048 * 32)
     return [vel, round(rpm, 2)]
 
 

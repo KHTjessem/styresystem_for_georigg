@@ -1,3 +1,4 @@
+window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
 // Python functions through EEL
 function Left (){
     val= document.getElementById("engineVelValue").value;
@@ -17,7 +18,22 @@ function stop (){
     eel.stop()
 }
 document.getElementById("stopButton").addEventListener('click', stop);
+document.getElementById('posStopBtn').addEventListener('click', stop);
 
+function slowRigth() {
+    eel.rotate_right(20);
+}
+document.getElementById('RightBtn').addEventListener('touchstart', slowRigth);
+document.getElementById('RightBtn').addEventListener('touchend', stop);
+document.getElementById('RightBtn').addEventListener('mousedown', slowRigth);
+document.getElementById('RightBtn').addEventListener('mouseup', stop);
+function slowLeft() {
+    eel.rotate_left(20);
+}
+document.getElementById('LeftRBtn').addEventListener('touchstart', slowLeft);
+document.getElementById('LeftRBtn').addEventListener('touchend', stop);
+document.getElementById('LeftRBtn').addEventListener('mousedown', slowLeft);
+document.getElementById('LeftRBtn').addEventListener('mouseup', stop);
 
 
 function setHome() {
@@ -48,13 +64,14 @@ document.getElementById('absoluteBtn').addEventListener('click', moveEngAbs)
 function attemptReconnect() {
     eel.attemptReconnect()(reconnectResp);
 }
-document.getElementById("reconnectBtn"),addEventListener("click", attemptReconnect)
+document.getElementById("reconnectBtn").addEventListener("click", attemptReconnect)
 
 function reconnectResp(connected) {
     if (!connected){
         return
     }
     document.getElementById('reconnectBtn').hidden = true
+    document.getElementById('reconnectBtn').disabled = true
 }
 
 // EEL exported functions.
@@ -71,6 +88,7 @@ function updStatus(st) {
 eel.expose(updatePosition)
 function updatePosition(mm) {
     positionRange.value = mm.toFixed(2);
+    console.log('New pos: ' + mm);
     UpdatePSlider();
 }
 

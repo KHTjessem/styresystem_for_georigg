@@ -3,7 +3,7 @@ import time
 
 
 class posLogger(threading.Thread):
-    def __init__(self, conn_ref, comData, waitTime, gap, events):
+    def __init__(self, conn_ref, comData, waitTime, gap, events, maxtime=0):
         threading.Thread.__init__(self)
         self.__conn = conn_ref
         self.comData = comData
@@ -16,7 +16,11 @@ class posLogger(threading.Thread):
         self.ent = posDataEnt # Reference to class
 
         self.__startTime = None
+        self.totTime = 0
+        self.maxTime = maxtime
         self.waitTime = waitTime
+
+        self.prevPos = None
     
 
     def run(self):
@@ -35,9 +39,13 @@ class posLogger(threading.Thread):
             t = time.time() - self.__startTime
             pos = self.getPos()
             self.posData.newEntry(self.ent(pos, t))
-         #   print(f"newpos: {pos}, at {t} s")
             if pos is not None:
                 self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
+            if pos == self.prevPos:
+                self.newRunEV.clear()
+                self.evs.evs.updStatus(3)
+            else:
+                self.prevPos = pos
             time.sleep(self.waitTime)
 
     def getPos(self):

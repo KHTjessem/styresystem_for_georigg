@@ -32,12 +32,17 @@ class controll:
             self.events.evs.updStatus(222)
     
     def attemptReconnect(self):
+        print("attempting to reconnect")
         port = comSerial.findComPort()
         if port is None:
+            print("Comport not found")
             self.events.evs.updStatus(333)
             self.events.evs.updStatusText("Unable to find engine, is it connected?")
             self.events.evs.notConnected()
             return False
+        self.__con.connect()
+        self.events.evs.updStatus(222)
+        return True
         
 
     def runCommand(self, command):
@@ -48,11 +53,12 @@ class controll:
             self.comdata.newCommand(command)
             self.__con.newComEv.set()
             self.__con.replyReadyEv.wait()
-            self.events.evs.updStatus(command.command_number)
             self.handleReply()
             self.__con.replyReadyEv.clear()
         else:
             self.events.evs.notConneted()
+            self.logpos = False
+            self.poslog.newRunEV.clear()
         self.__con.tlock.release()
     
     def checkLogging(self):
@@ -66,6 +72,8 @@ class controll:
         rep = self.comdata.getReply()
         if rep == "Not connected to engine":
             return self.events.evs.notConneted()
+        if rep.status == 100:
+            self.events.evs.updStatus(rep.command_number)
     
 
 

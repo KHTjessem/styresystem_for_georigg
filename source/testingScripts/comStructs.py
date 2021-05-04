@@ -1,3 +1,5 @@
+# A copy is here for testscripts
+
 import struct
 # Information from TMCM-1611 datasheet
 # https://www.trinamic.com/products/modules/details/tmcm-1161/
@@ -40,7 +42,6 @@ def calckChecksum(obj):
     csum = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6] + arr[7]
     while csum > 255:
         csum -= 256
-    print(csum)
     obj.checksum = csum
 
 class reply:
@@ -49,8 +50,7 @@ class reply:
         self.module_address = module_address
         self.status = status
         self.command_number = command_number
-        self.value = int.from_bytes(value, byteorder="big", signed=True) #4 bytes
-        print(self.value)
+        self.value = int.from_bytes(value, byteorder="big") #4 bytes
         self.checksum = checksum
     
     def test(self):

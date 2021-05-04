@@ -31,5 +31,7 @@ function hide(){
 
 // reconnect button
 function reconnButton() {
-    document.getElementById('reconnectBtn').hidden = false;
+    btn = document.getElementById('reconnectBtn');
+    btn.hidden = false;
+    btn.disabled = false;
 }

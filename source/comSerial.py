@@ -36,7 +36,10 @@ class connection(threading.Thread):
         if not self.connected:
             return "Not connected to engine"
         print(f'Writing command: {data}')
-        self.__serialCon.write(data)
+        try:
+            self.__serialCon.write(data)
+        except:
+            return self.checkConnection(data)
         resp = self.__serialCon.read(size=9) #Reply struct is 9 bytes
         print(f'Response: {resp}')
         if len(resp) < 9:
@@ -47,6 +50,7 @@ class connection(threading.Thread):
         """Checks if engine has some error or lost connection"""
         cport = findComPort()
         if cport is None:
+            self.connected = False
             return "Cant find engine, is it connected?"
         self.comport = cport
         try:
@@ -57,14 +61,10 @@ class connection(threading.Thread):
             self.__serialCon.write(data)
             resp = self.__serialCon.read(size=9)
             if len(resp) == 9:
-                return resp
+                self.connected = True
+                return comStructs.reply(resp[0], resp[1], resp[2], resp[3], resp[4:8], resp[8])
         except:
-            pass
-
-        self.__serialCon.write(self.statCommand.getByteArray())
-        resp = self.__serialCon.read(size=9)
-        if len(resp) == 9:
-            return "Unable to connect" # Last ditch effort is to restart thread.
+            pass #TODO
 
 
 
@@ -72,8 +72,8 @@ class connection(threading.Thread):
         try:
             self.__serialCon = serial.Serial(self.comport, timeout=0.5)
             self.connected = True
-        except:
-            pass
+        except Exception as ex:
+            print(f"Did not connect: {ex}")
         finally:
             pass
     

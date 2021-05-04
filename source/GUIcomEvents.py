@@ -39,5 +39,6 @@ StatusDict = {
     1: [20, 'Rotating right'],
     2: [20, 'Rotating left'],
     3: [10, 'Stopped'],
-    4: [20, 'Moving to new position']
+    4: [20, 'Moving to new position'],
+    5: [20, 'Moving to home position']
 }
