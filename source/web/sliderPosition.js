@@ -1,6 +1,7 @@
 const
   positionRange = document.getElementById('positionRange'),
   PositionValue = document.getElementById('PositionValue'),
+  
   UpdatePSlider = ()=>{
     const
       newValue = Number( (positionRange.value - positionRange.min) * 100 / (positionRange.max - positionRange.min) ),
