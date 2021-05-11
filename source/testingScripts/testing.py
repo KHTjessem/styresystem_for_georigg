@@ -1,4 +1,4 @@
-from controll import controll
+from comStructs import controll
 
 
 class testing:
