@@ -88,7 +88,6 @@ function updStatus(st) {
 eel.expose(updatePosition)
 function updatePosition(mm) {
     positionRange.value = mm.toFixed(2);
-    console.log('New pos: ' + mm);
     UpdatePSlider();
 }
 
