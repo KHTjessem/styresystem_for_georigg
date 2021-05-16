@@ -40,6 +40,7 @@ function setHome() {
     eel.setHome()    
 }
 document.getElementById('setHomebtn').addEventListener('click', setHome)
+
 function goToHome() { 
     eel.moveto_abs(0)    
 }

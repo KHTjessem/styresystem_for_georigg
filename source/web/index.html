@@ -9,8 +9,8 @@
 <body>  
     <header class="space-between">
           <div class="" id="navBar">
-            <button onclick="hideStatus()">Velocity mode</button>
-            <button onclick="hidePosition()">Positioning mode</button>
+            <button onclick="hidePosition()">Velocity mode</button>
+            <button onclick="hideVelcity()">Positioning mode</button>
           </div>
 
         <div class="emBtn" >
@@ -19,18 +19,15 @@
 </header>
 
 <div class="panel"> 
-    <div id="statusSignal">
-        
+    
+    <div id="statusSignal">     
         <div class="shadow" id="status-panel">
-            <div style="display: flex; flex-direction: row;">
+            <div>
                 <div>
                     <span>Status:</span>
                     <li id="status-text">Feedback from motor</li>
                 </div>
                 <button id="reconnectBtn" disabled hidden>Reconnect</button>
-            </div>
-            <div>
-                
             </div>
             <div id="light"> </div>
         </div>

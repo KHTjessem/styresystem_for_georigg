@@ -8,19 +8,15 @@ var lightMotor = document.getElementById("light")
 
 
 
-function hideStatus() {
+function hidePosition() {
     positionPanel.style.display = "none";
     velocityPanel.style.display = "flex";      
+}
 
-} 
-function hidePosition(){
+function hideVelcity(){
     velocityPanel.style.display = "none"; 
     positionPanel.style.display = "flex"
 }
-
-
-
-
 
 // reconnect button
 function reconnButton() {
