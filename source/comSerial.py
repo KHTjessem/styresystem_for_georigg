@@ -1,14 +1,12 @@
-import serial
+import serial, threading, atexit
 from serial.tools import list_ports as lports
 import comStructs
 import threading
-import atexit
 
 class connection(threading.Thread):
-    def __init__(self, comData, statusCommand):
+    def __init__(self, comData):
         threading.Thread.__init__(self)
         self.tlock = threading.Lock()
-        self.statCommand = statusCommand
 
         self.comport = findComPort()
         self.connected = False
@@ -63,8 +61,9 @@ class connection(threading.Thread):
             if len(resp) == 9:
                 self.connected = True
                 return comStructs.reply(resp[0], resp[1], resp[2], resp[3], resp[4:8], resp[8])
-        except:
-            pass #TODO
+        except Exception as ex:
+            print(f'checkConnection exception: {ex}') # prints to console
+            return "Something went worng."
 
 
 

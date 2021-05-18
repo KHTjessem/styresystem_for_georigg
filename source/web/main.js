@@ -96,3 +96,8 @@ function notConnected() {
     statusUpdate([30, "Not connected to engine"]);
     reconnButton();
 }
+
+eel.expose(stopEngine)
+function stopEngine() {
+    stop()    
+}

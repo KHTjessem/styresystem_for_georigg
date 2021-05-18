@@ -8,7 +8,6 @@ class controll:
     def __init__(self, events):
         self.commands = definedCommands.commands()
         self.comdata = comData()
-        self.lock = threading.Lock() # Needed so only one commands runs at a time
         self.events = events
         self.events.evs.updStatus(111)
 
@@ -23,7 +22,7 @@ class controll:
         self.logpos = False
     
     def setUpConnection(self):
-        self.__con = comSerial.connection(self.comdata, self.commands.DriveStatusFlags)
+        self.__con = comSerial.connection(self.comdata)
         self.__con.setDaemon(True)
         self.__con.start()
         if not self.__con.connected:
@@ -68,7 +67,7 @@ class controll:
         self.poslog.newRunEV.set()
     
     def handleReply(self):
-        """Not implemented"""
+        """Handles the reply from engines module"""
         rep = self.comdata.getReply()
         if rep == "Not connected to engine":
             return self.events.evs.notConneted()
@@ -121,7 +120,7 @@ class controll:
         self.runCommand(self.commands.SAP)
 
     def getActualPosition(self):
-        """Collects the enignes position in microsteps. TODO: handle reply"""
+        """Collects the enignes position in microsteps."""
         self.runCommand(self.commands.GAP)
 
 

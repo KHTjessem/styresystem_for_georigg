@@ -9,8 +9,8 @@ class eventsList:
         self.evs.updStatusText += self.updStatusText
         self.evs.updatePosition += self.updPosition
         self.evs.notConneted += self.notConneted
+        self.evs.stopEngineEEL += self.stopEngine
 
-    
     def notConneted(self):
         """Fire when engine is no longer connected"""
         self.eel.notConnected()
@@ -26,6 +26,12 @@ class eventsList:
     def updPosition(self, posInmm):
         """Update position on GUI"""
         self.eel.updatePosition(posInmm)
+    
+    def stopEngine(self):
+        """Stops the enigne, does so trough eel
+        Usefull to navigate around threads"""
+        self.eel.stopEngine()
+
 
 StatusDict = {
     # self defined
