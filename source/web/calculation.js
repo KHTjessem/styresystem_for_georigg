@@ -1,7 +1,7 @@
 
 function calcRPM() {
     var mm = document.getElementById("wantVel").value
-    var rpm = 5*(mm/60)
+    var rpm = 1/5 *(mm/60)
 
     eel.calcVelRPM(rpm)(calculationVelocity)
 }
