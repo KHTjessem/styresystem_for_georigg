@@ -19,6 +19,8 @@ class posLogger(threading.Thread):
 
         self.prevPos = None
         self.totLength = 0
+        self.maxleft = -614400
+        self.maxright = 614400
     
 
     def run(self):
@@ -45,10 +47,18 @@ class posLogger(threading.Thread):
                     self.totLength += abs(self.prevPos - pos)
                 self.prevPos = pos
             if self.totTime >= self.maxTime and self.maxTime > 0: #No more time left.
-                self.newRunEV.clear()
-                self.evs.stopEngineEEL()
+                self.stopEng('Max runtime reached')
+            elif self.maxleft < 0 and pos <= self.maxleft:
+                self.stopEng('Reached max extension')
+            elif self.maxright > 0 and pos <= self.maxright:
+                self.stopEng('Reached max contraction')
             else:
                 time.sleep(self.waitTime)
+
+    def stopEng(self, msg):
+        self.newRunEV.clear()
+        self.evs.stopEngineEEL()
+        self.evs.updStatusText(msg)
 
     def getPos(self):
         """Gets the position of the enigne in microsteps"""

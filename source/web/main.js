@@ -19,6 +19,7 @@ function stop (){
 }
 document.getElementById("stopButton").addEventListener('click', stop);
 document.getElementById('posStopBtn').addEventListener('click', stop);
+document.getElementById('emergency').addEventListener('click', stop);
 
 function slowRigth() {
     eel.rotate_right(20);
@@ -73,6 +74,26 @@ function reconnectResp(connected) {
     document.getElementById('reconnectBtn').hidden = true
     document.getElementById('reconnectBtn').disabled = true
 }
+
+function SetNewMaxValues() {
+    mmleft = document.getElementById('maxLeftPos').value * -1;
+    mmright = document.getElementById('maxRightPos').value;
+}
+document.getElementById('maxLeftPos').addEventListener('input', SetNewMaxValues);
+document.getElementById('maxRightPos').addEventListener('input', SetNewMaxValues);
+
+function SetNewMaxTime() {
+    time = document.getElementById('timer').value;
+    tform = document.getElementById('timerOption').value;
+    if (tform === "Minute") { // Convert to seconds.
+        time = time * 60;
+    } else if (tform === "Hour"){
+        time = time * 60 * 60;
+    }
+    eel.newMaxTime(time);
+}
+document.getElementById('timer').addEventListener('input', SetNewMaxTime);
+document.getElementById('timerOption').addEventListener('change', SetNewMaxTime);
 
 // EEL exported functions.
 eel.expose(updStatusText)

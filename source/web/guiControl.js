@@ -10,21 +10,18 @@ var lightMotor = document.getElementById("light")
 
 
 function hideStatus() {
-    graph.style.display = "none";
     positionPanel.style.display = "none";
     velocityPanel.style.display = "flex";      
 
 } 
 function hidePosition(){
-    velocityPanel.style.display = "none"; 
-    graph.style.display = "none";
+    velocityPanel.style.display = "none";
     positionPanel.style.display = "flex"
 }
 
 function hide(){
     velocityPanel.style.display = "none";
     positionPanel.style.display = "none";
-    graph.style.display = "block";
 }
 
 

@@ -40,6 +40,8 @@ class controll:
             self.events.evs.notConnected()
             return False
         self.__con.connect()
+        # If engine is running wil stop if above max limit after reconnect
+        self.poslog.newRunEV.set()
         self.events.evs.updStatus(222)
         return True
         
@@ -73,6 +75,8 @@ class controll:
             return self.events.evs.notConneted()
         if rep.status == 100:
             self.events.evs.updStatus(rep.command_number)
+        if rep.command_number == 6:
+            self.events.evs.updPosition(rep.value/10240)
     
 
 
@@ -122,6 +126,20 @@ class controll:
     def getActualPosition(self):
         """Collects the enignes position in microsteps."""
         self.runCommand(self.commands.GAP)
+
+    # Test if this works. Race condition should not matter because
+    # The value only gets set from here, on its class its only read. 
+    # The reading happens evry x amount of time, therefore if it changes in a race condition,
+    # The new value will get read at next run through.
+
+    def newMaxValues(self, left, right):
+        """Set max left and right extension"""
+        self.poslog.maxleft = left * 10240
+        self.poslog.maxright = right * 10240
+
+    def newMaxTime(self, time):
+        """Sets max runtime, 'time' needs to be in seconds"""
+        self.poslog.maxTime = time
 
 
 class comData:

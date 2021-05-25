@@ -42,8 +42,8 @@ StatusDict = {
     333: [30, 'Something went wrong'],
 
     # Based on Command number from TMCL firmware manual 1.42.
-    1: [20, 'Rotating right'],
-    2: [20, 'Rotating left'],
+    1: [20, 'Extending'],
+    2: [20, 'Contracting'],
     3: [10, 'Stopped'],
     4: [20, 'Moving to new position'],
     5: [20, 'Moving to home position']

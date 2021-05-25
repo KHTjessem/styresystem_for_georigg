@@ -63,6 +63,21 @@ def calcVelRPM(rpm, pdiv):
     rpm = (16*10**6 * vel * 60)/(2**pdiv * 200* 2**8 *2048 * 32)
     return [vel, round(rpm, 5)]
 
+@eel.expose
+def SetMaxSpeed(vel):
+    """Sets the enignes max speed using Internal velocity value"""
+    cont.setMaxSpeedPmode(vel)
+
+@eel.expose
+def newMaxValues(left, right):
+    cont.newMaxValues(left, right)
+
+@eel.expose
+def newMaxTime(time):
+    """Set new maxtime. 'time' Needs to be seconds"""
+    print(f"Setting new max time: {time}s")
+    cont.newMaxTime(time)
+
 
 
 eel_kwargs = dict(
