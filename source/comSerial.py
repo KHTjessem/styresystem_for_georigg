@@ -1,14 +1,13 @@
-import serial
+import serial, threading, atexit
 from serial.tools import list_ports as lports
 import comStructs
 import threading
-import atexit
 
 class connection(threading.Thread):
-    def __init__(self, comData, statusCommand):
+    def __init__(self, comData):
         threading.Thread.__init__(self)
         self.tlock = threading.Lock()
-        self.statCommand = statusCommand
+        self.comdata = comData
 
         self.comport = findComPort()
         self.connected = False
@@ -16,8 +15,6 @@ class connection(threading.Thread):
         if self.comport is not None:
             self.connect()
 
-
-        self.comdata = comData
         self.newComEv = threading.Event()
         self.replyReadyEv = threading.Event()
         atexit.register(self.close)
@@ -35,13 +32,13 @@ class connection(threading.Thread):
         """Writes the data variable on the serial connection"""
         if not self.connected:
             return "Not connected to engine"
-        print(f'Writing command: {data}')
+        #print(f'Writing command: {data}')
         try:
             self.__serialCon.write(data)
         except:
             return self.checkConnection(data)
         resp = self.__serialCon.read(size=9) #Reply struct is 9 bytes
-        print(f'Response: {resp}')
+        #print(f'Response: {resp}')
         if len(resp) < 9:
             return self.checkConnection(data)
         return comStructs.reply(resp[0], resp[1], resp[2], resp[3], resp[4:8], resp[8])
@@ -63,8 +60,9 @@ class connection(threading.Thread):
             if len(resp) == 9:
                 self.connected = True
                 return comStructs.reply(resp[0], resp[1], resp[2], resp[3], resp[4:8], resp[8])
-        except:
-            pass #TODO
+        except Exception as ex:
+            print(f'checkConnection exception: {ex}') # prints to console
+            return "Something went worng."
 
 
 
@@ -73,6 +71,9 @@ class connection(threading.Thread):
             self.__serialCon = serial.Serial(self.comport, timeout=0.5)
             self.connected = True
         except Exception as ex:
+            if "PermissionError" in str(ex):
+                msg = "Some other program has taken control of engine, unable to take connection."
+                self.comdata.newError(msg)
             print(f"Did not connect: {ex}")
         finally:
             pass

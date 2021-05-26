@@ -10,21 +10,22 @@ var lightMotor = document.getElementById("light")
 
 
 function hideStatus() {
-    graph.style.display = "none";
     positionPanel.style.display = "none";
-    velocityPanel.style.display = "flex";      
-
+    velocityPanel.style.display = "flex";
+    eel.newPdiv(9);
+    setMaxSpeed(2000) // Set max speed for home button during velmode.
+    // 2000 vel is an estimated 5.6 mm/min
 } 
 function hidePosition(){
-    velocityPanel.style.display = "none"; 
-    graph.style.display = "none";
-    positionPanel.style.display = "flex"
+    velocityPanel.style.display = "none";
+    positionPanel.style.display = "flex";
+    eel.newPdiv(3);
+    calcMaxSpeedRPM() // Sets max speed in pos mode.
 }
 
 function hide(){
     velocityPanel.style.display = "none";
     positionPanel.style.display = "none";
-    graph.style.display = "block";
 }
 
 
@@ -35,3 +36,17 @@ function reconnButton() {
     btn.hidden = false;
     btn.disabled = false;
 }
+
+
+function downloadManual() {
+    window.open('./Manual.pdf', '_blank');
+}
+document.getElementById('UManualBtn').addEventListener('click', export_chart)
+function export_chart() {
+    var a = document.createElement('a');
+    a.href = './Manual.pdf';
+    a.download = 'Manual.pdf';
+ 
+ // Trigger the download
+    a.click();
+ }

@@ -11,6 +11,8 @@ const
 document.addEventListener("DOMContentLoaded", UpdatePSlider);
 positionRange.addEventListener('input', UpdatePSlider);
 
+// Update position when user clicks the position slider
+//document.getElementById('posWrapper').addEventListener('click', eel.UpdPos)
 
 
 var slider = document.getElementById("velocitySlider")

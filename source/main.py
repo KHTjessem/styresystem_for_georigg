@@ -6,13 +6,13 @@ import platform
 from controll import controll
 from GUIcomEvents import eventsList
 
+
 # EEL init
 eel.init('web')
 events = eventsList(eel)
 
 # Engine init
 cont = controll(events)
-
 
 @eel.expose
 def attemptReconnect():
@@ -54,10 +54,6 @@ def stop():
     cont.stop()
 
 @eel.expose
-def getDataNow(): #TODO: fix it
-    return cont.poslog.posData.getLatestData()
-
-@eel.expose
 def calcVelRPM(rpm, pdiv):
     """
     Calculates the rpm that fits, an translates it to engine values.
@@ -65,14 +61,42 @@ def calcVelRPM(rpm, pdiv):
     """
     vel = round((rpm * 2**pdiv *200 * 2**8 *2048 * 32)/(16*10**6 * 60))
     rpm = (16*10**6 * vel * 60)/(2**pdiv * 200* 2**8 *2048 * 32)
-    return [vel, round(rpm, 2)]
+    return [vel, round(rpm, 5)]
+
+@eel.expose
+def SetMaxSpeed(vel):
+    """Sets the enignes max speed using Internal velocity value"""
+    cont.setMaxSpeedPmode(vel)
+
+@eel.expose
+def newMaxValues(left, right):
+    cont.newMaxValues(left, right)
+
+@eel.expose
+def newMaxTime(time):
+    """Set new maxtime. 'time' Needs to be seconds"""
+    print(f"Setting new max time: {time}s")
+    time = int(time)
+    cont.newMaxTime(time)
+
+@eel.expose
+def UpdPos():
+    """Gets engines position. Position is sent back in handleReply() in controll class."""
+    cont.getActualPosition()
+
+@eel.expose
+def newPdiv(val):
+    cont.stop()
+    cont.setPdiv(val)
+
+# Set initial settings. After eel.init stuff is only ran after first page load.
+
+cont.setPdiv(9)
+cont.setMaxSpeedPmode(60) # 10 mm/h
 
 
 
 eel_kwargs = dict(
-    host='localhost',
-    port=8080,
-    size=(1280, 800),
 )
 
 # Browser fallback for windows.

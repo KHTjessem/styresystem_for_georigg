@@ -19,6 +19,7 @@ function stop (){
 }
 document.getElementById("stopButton").addEventListener('click', stop);
 document.getElementById('posStopBtn').addEventListener('click', stop);
+document.getElementById('emergency').addEventListener('click', stop);
 
 function slowRigth() {
     eel.rotate_right(20);
@@ -44,6 +45,7 @@ function goToHome() {
     eel.moveto_abs(0)    
 }
 document.getElementById('goHomebtn').addEventListener('click', goToHome)
+document.getElementById('homeButton').addEventListener('click', goToHome)
 
 
 
@@ -74,10 +76,32 @@ function reconnectResp(connected) {
     document.getElementById('reconnectBtn').disabled = true
 }
 
+function SetNewMaxValues() {
+    mmleft = document.getElementById('maxLeftPos').value;
+    mmright = document.getElementById('maxRightPos').value;
+    eel.newMaxValues(mmleft*1, mmright*1)
+}
+document.getElementById('maxLeftPos').addEventListener('input', SetNewMaxValues);
+document.getElementById('maxRightPos').addEventListener('input', SetNewMaxValues);
+
+function SetNewMaxTime() {
+    time = document.getElementById('timer').value;
+    tform = document.getElementById('timerOption').value;
+    if (tform === "Minute") { // Convert to seconds.
+        time = time * 60;
+    } else if (tform === "Hour"){
+        time = time * 60 * 60;
+    }
+    eel.newMaxTime(time);
+}
+document.getElementById('timer').addEventListener('input', SetNewMaxTime);
+document.getElementById('timerOption').addEventListener('change', SetNewMaxTime);
+
 // EEL exported functions.
 eel.expose(updStatusText)
 function updStatusText(text) {
     document.getElementById("status-text").innerText = text;
+    console.log(text)
 }
 
 eel.expose(updStatus)
@@ -95,4 +119,23 @@ eel.expose(notConnected)
 function notConnected() {
     statusUpdate([30, "Not connected to engine"]);
     reconnButton();
+}
+
+eel.expose(stopEngine)
+function stopEngine() {
+    stop()    
+}
+
+eel.expose(newTimePassed)
+function newTimePassed(time) {
+    unit = 's'
+    if (time > 60) {
+        time = (time / 60).toFixed(2);
+        unit = 'min';
+        if (time>60){
+            time = (time / 60).toFixed(2);
+            unit = 'hour(s)';
+        }
+    }
+    document.getElementById('PassedTime').innerText = time + unit;
 }
