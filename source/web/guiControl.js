@@ -36,3 +36,17 @@ function reconnButton() {
     btn.hidden = false;
     btn.disabled = false;
 }
+
+
+function downloadManual() {
+    window.open('./Manual.pdf', '_blank');
+}
+document.getElementById('UManualBtn').addEventListener('click', export_chart)
+function export_chart() {
+    var a = document.createElement('a');
+    a.href = './Manual.pdf';
+    a.download = 'Manual.pdf';
+ 
+ // Trigger the download
+    a.click();
+ }
