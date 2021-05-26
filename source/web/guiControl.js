@@ -13,12 +13,14 @@ function hideStatus() {
     positionPanel.style.display = "none";
     velocityPanel.style.display = "flex";
     eel.newPdiv(9);
-
+    setMaxSpeed(2000) // Set max speed for home button during velmode.
+    // 2000 vel is an estimated 5.6 mm/min
 } 
 function hidePosition(){
     velocityPanel.style.display = "none";
     positionPanel.style.display = "flex";
     eel.newPdiv(3);
+    calcMaxSpeedRPM() // Sets max speed in pos mode.
 }
 
 function hide(){

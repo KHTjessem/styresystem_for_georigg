@@ -28,9 +28,10 @@ class posLogger(threading.Thread):
         """Main running loop of thread"""
         while True:
             self.newRunEV.wait()
+            # Wait() is wrongly triggered when running clear(),
+            # this fixes the issue, not to happy about it.
             time.sleep(0.1)
             if not self.newRunEV.is_set():
-                print('ree')
                 continue
             print('New run')
             self.newRun()
@@ -52,8 +53,7 @@ class posLogger(threading.Thread):
         if pos is not None:
             self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
         elif pos is None:
-            # Possebly lost connection
-
+            # Possably lost connection
             self.newRunEV.clear()
             return False
         if pos == self.prevPos:
@@ -69,11 +69,11 @@ class posLogger(threading.Thread):
             self.prevposCount = 0
             
         if self.maxleft != 0 and pos <= self.maxleft:
-            print(f'Max left: {self.maxleft}, pos: {pos}')
+            print(f'Reached Max left: {self.maxleft}, pos: {pos}')
             self.stopEng('Reached max extension')
             return False
         elif self.maxright != 0 and pos >= self.maxright:
-            print(f'Max left: {self.maxright}, pos: {pos}')
+            print(f'Reached Max right: {self.maxright}, pos: {pos}')
             self.stopEng('Reached max contraction')
             return False
         return True

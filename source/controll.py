@@ -76,9 +76,8 @@ class controll:
         self.__con.tlock.release()
     
     def checkLogging(self):
-        """Checks if logger should be on or off and sets it accordingly."""
+        """Checks if logger should be on starts it if needed."""
         if self.logpos and self.poslog.newRunEV.is_set():
-            print('wrong')
             return
         self.poslog.newRunEV.set()
     

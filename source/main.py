@@ -87,7 +87,6 @@ def UpdPos():
 @eel.expose
 def newPdiv(val):
     cont.stop()
-    print(f'Ned pdiv {val}')
     cont.setPdiv(val)
 
 # Set initial settings. After eel.init stuff is only ran after first page load.
