@@ -30,6 +30,10 @@
                 </div>
                 <button id="reconnectBtn" disabled hidden>Reconnect</button>
             </div>
+            <div id="tPassWrap">
+                <span>Time Passed:</span>
+                <span id="PassedTime">0s</span>
+            </div>
             <div>
                 
             </div>
@@ -40,7 +44,7 @@
     <div class="sliderbox shadow"  id="slidPosition">
         <div class="flex-col-down max-box">
             Max extend
-            <input type="number" class="number-textbox" value="60" id="maxLeftPos">
+            <input type="number" class="number-textbox" value="-60" id="maxLeftPos">
         </div>
         <div class="positionWrap" id="posWrapper">
             <div class="positionValue" id="PositionValue"></div>
@@ -70,7 +74,10 @@
         <button id="posStopBtn">Stop</button>
         <div class="center-content">
             <span>Max speed</span>
-            <input type="number" class="number-textbox" value="10" name="max speed" id="MaxSpeedPmode"> mm/h
+            <input type="number" class="number-textbox" value="10" name="max speed" id="MaxSpeedPmode"> mm/min
+            <br>
+            <span>Estimated: </span>
+            <input type="number" disabled class="number-textbox" value="10.01" id="posVelEst"> mm/min
         </div>
         <div class="setPosition">
             <button class="buttons" id="setHomebtn">Set Home</button>

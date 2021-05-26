@@ -18,6 +18,7 @@ class posLogger(threading.Thread):
         self.waitTime = waitTime
 
         self.prevPos = None
+        self.prevposCount = 0
         self.totLength = 0
         self.maxleft = -614400
         self.maxright = 614400
@@ -27,37 +28,72 @@ class posLogger(threading.Thread):
         """Main running loop of thread"""
         while True:
             self.newRunEV.wait()
+            time.sleep(0.1)
+            if not self.newRunEV.is_set():
+                print('ree')
+                continue
+            print('New run')
             self.newRun()
             self.work()
             self.newRunEV.clear()
-    
+
     def work(self):
         """Threads main workload"""
         while self.newRunEV.is_set():
-            t = time.time() - self.__startTime
-            self.totTime += t
-            pos = self.getPos()
-            if pos is not None:
-                self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
-            if pos == self.prevPos:
+            t = self.timeKeep()
+            p = self.posKeep()
+            if not t or not p:
+                break      
+            time.sleep(self.waitTime)
+        
+
+    def posKeep(self):
+        pos = self.getPos()
+        if pos is not None:
+            self.evs.evs.updatePosition(pos/10240) # 10240 microsteps = 1 mm displacement
+        elif pos is None:
+            # Possebly lost connection
+
+            self.newRunEV.clear()
+            return False
+        if pos == self.prevPos:
+            self.prevposCount += 1
+            if self.prevposCount >= 4:
+                self.prevposCount = 0
                 self.newRunEV.clear()
                 self.evs.evs.updStatus(3)
-            else:
-                if self.prevPos is not None:
-                    self.totLength += abs(self.prevPos - pos)
-                self.prevPos = pos
-            if self.totTime >= self.maxTime and self.maxTime > 0: #No more time left.
-                self.stopEng('Max runtime reached')
-            elif self.maxleft < 0 and pos <= self.maxleft:
-                self.stopEng('Reached max extension')
-            elif self.maxright > 0 and pos <= self.maxright:
-                self.stopEng('Reached max contraction')
-            else:
-                time.sleep(self.waitTime)
+        else:
+            if self.prevPos is not None:
+                self.totLength += abs(self.prevPos - pos)
+            self.prevPos = pos
+            self.prevposCount = 0
+            
+        if self.maxleft != 0 and pos <= self.maxleft:
+            print(f'Max left: {self.maxleft}, pos: {pos}')
+            self.stopEng('Reached max extension')
+            return False
+        elif self.maxright != 0 and pos >= self.maxright:
+            print(f'Max left: {self.maxright}, pos: {pos}')
+            self.stopEng('Reached max contraction')
+            return False
+        return True
+
+    def timeKeep(self):
+        t = time.time() - self.__startTime
+        self.totTime = int(t) #Rounds it down
+        self.evs.timePassed(self.totTime)
+        # print(f'Total time: {self.totTime}, t: {t}, maxT: {self.maxTime}')
+        if  self.maxTime != 0 and self.totTime >= self.maxTime: #No more time left.
+            self.newRunEV.clear()
+            self.stopEng('Max runtime reached')
+            return False
+        return True
+    
 
     def stopEng(self, msg):
         self.newRunEV.clear()
-        self.evs.stopEngineEEL()
+        self.evs.stopEngine()
+        time.sleep(0.5)
         self.evs.updStatusText(msg)
 
     def getPos(self):
@@ -70,6 +106,7 @@ class posLogger(threading.Thread):
         self.__conn.replyReadyEv.clear()
         self.__conn.tlock.release()
         if isinstance(pos, str):
+            self.evs.notConneted()
             return None
         return pos.value
 
@@ -77,6 +114,7 @@ class posLogger(threading.Thread):
     def newRun(self):
         """Start from 0 again"""
         self.__startTime = time.time()
+        self.totTime = 0
 
 
     def stop(self):

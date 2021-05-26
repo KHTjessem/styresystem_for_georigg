@@ -2,7 +2,7 @@ import comSerial
 from comStructs import command
 from posLog import posLogger
 import commands as definedCommands
-import threading
+import threading, time
 
 class controll:
     def __init__(self, events):
@@ -10,6 +10,8 @@ class controll:
         self.comdata = comData()
         self.events = events
         self.events.evs.updStatus(111)
+
+        self.lastCommand = None
 
         # Connection on its own thread
         self.__con = None
@@ -27,6 +29,11 @@ class controll:
         self.__con.start()
         if not self.__con.connected:
             self.events.evs.notConneted()
+            time.sleep(0.2)
+            e = self.comdata.geterrorMsg()
+            if e is not None:
+                self.events.updStatusText(e)
+                self.comdata.newError(None)
         else:
             self.events.evs.updStatus(222)
     
@@ -38,6 +45,11 @@ class controll:
             self.events.evs.updStatus(333)
             self.events.evs.updStatusText("Unable to find engine, is it connected?")
             self.events.evs.notConnected()
+            return False
+        e = self.comdata.geterrorMsg()
+        if e is not None:
+            self.events.updStatusText(e)
+            self.comdata.newError(None)
             return False
         self.__con.connect()
         # If engine is running wil stop if above max limit after reconnect
@@ -51,6 +63,7 @@ class controll:
         self.__con.tlock.acquire()
         if self.__con.connected:
             self.checkLogging()
+            self.lastCommand = command
             self.comdata.newCommand(command)
             self.__con.newComEv.set()
             self.__con.replyReadyEv.wait()
@@ -65,6 +78,7 @@ class controll:
     def checkLogging(self):
         """Checks if logger should be on or off and sets it accordingly."""
         if self.logpos and self.poslog.newRunEV.is_set():
+            print('wrong')
             return
         self.poslog.newRunEV.set()
     
@@ -72,11 +86,17 @@ class controll:
         """Handles the reply from engines module"""
         rep = self.comdata.getReply()
         if rep == "Not connected to engine":
-            return self.events.evs.notConneted()
+            self.events.evs.notConneted()
+            return
+        if isinstance(rep, str):
+            return self.events.updStatusText(rep)
         if rep.status == 100:
+            if self.lastCommand.type_number == 154 or self.lastCommand.type_number == 4:
+                return
             self.events.evs.updStatus(rep.command_number)
         if rep.command_number == 6:
             self.events.evs.updPosition(rep.value/10240)
+        
     
 
 
@@ -106,7 +126,7 @@ class controll:
         """Stops the engine, stops logpos"""
         self.logpos = False
         self.runCommand(self.commands.MST)
-        self.poslog.newRunEV.clear()
+        #self.poslog.newRunEV.clear()
     
     def setPdiv(self, pdiv):
         """Change the modules Pulse divisor"""
@@ -146,6 +166,7 @@ class comData:
     def __init__(self):
         self.__command = None
         self.lock = threading.Lock()
+        self.errorMsg = None
 
         self.__reply = None
     
@@ -174,3 +195,16 @@ class comData:
         r = self.__reply
         self.lock.release()
         return r
+    
+    def newError(self, msg):
+        """Set new error message"""
+        self.lock.acquire()
+        self.errorMsg = msg
+        self.lock.release()
+    
+    def geterrorMsg(self):
+        """Get the latest error message"""
+        self.lock.acquire()
+        e = self.errorMsg
+        self.lock.release()
+        return e

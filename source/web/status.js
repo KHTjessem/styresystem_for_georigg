@@ -3,6 +3,10 @@ var feedback = document.getElementById("status-text")
 
 
 function statusUpdate(liste){
+    a = document.getElementById('status-text').innerText;
+    if (liste[1].includes("Not connected") && a.includes("program has taken control")){
+        return
+    }
     if (liste[0] == 10){
         light.style.backgroundColor= "#01BAEF"
     }
@@ -15,4 +19,5 @@ function statusUpdate(liste){
     }
 
     feedback.innerText = liste[1]
+    console.log(liste[1])
 }

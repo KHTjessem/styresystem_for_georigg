@@ -26,23 +26,24 @@ function calcTimer() {
     return list
 }
 
-document.getElementById('velocitySlider').onmouseup = calcRPM
-document.getElementById('velocitySlider').ontouchend = calcRPM
+document.getElementById('velocitySlider').addEventListener('mouseup', calcRPM)
+document.getElementById('velocitySlider').addEventListener('touchend', calcRPM)
 document.getElementById('wantVel').addEventListener('input', calcRPM)
 
 
 // Positionong mode
 function calcMaxSpeedRPM() {
     var mm = document.getElementById("MaxSpeedPmode").value;
-    var rpm = (mm/60)/5;
+    var rpm = (mm)/5;
 
-    pdiv = 9;
+    pdiv = 3;
     eel.calcVelRPM(rpm, pdiv)(SetMaxSpeedCallback);
 }
 document.getElementById('MaxSpeedPmode').addEventListener('input', calcMaxSpeedRPM)
 
 function SetMaxSpeedCallback(list) {
-    setMaxSpeed(list[0])
+    setMaxSpeed(list[0]);
+    document.getElementById('posVelEst').value = (list[1]*5).toFixed(2);
 }
 
 function setMaxSpeed(speedVel) {

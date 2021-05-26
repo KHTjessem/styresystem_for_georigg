@@ -168,7 +168,7 @@ button:hover{
     justify-content: space-between;
 }
 #position-panel{
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     min-height: 80px;
@@ -192,6 +192,9 @@ button:hover{
     color: white;
 }
 
+#tPassWrap{
+    margin: auto 0;
+}
 
 /* Status panel specifics */
 #statusSignal{
@@ -238,7 +241,6 @@ button:hover{
     border: #292F3D solid;
     margin: 10px 2px;
 }
-
 
 
 /* Dropdown menu */

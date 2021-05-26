@@ -45,6 +45,7 @@ function goToHome() {
     eel.moveto_abs(0)    
 }
 document.getElementById('goHomebtn').addEventListener('click', goToHome)
+document.getElementById('homeButton').addEventListener('click', goToHome)
 
 
 
@@ -76,8 +77,9 @@ function reconnectResp(connected) {
 }
 
 function SetNewMaxValues() {
-    mmleft = document.getElementById('maxLeftPos').value * -1;
+    mmleft = document.getElementById('maxLeftPos').value;
     mmright = document.getElementById('maxRightPos').value;
+    eel.newMaxValues(mmleft*1, mmright*1)
 }
 document.getElementById('maxLeftPos').addEventListener('input', SetNewMaxValues);
 document.getElementById('maxRightPos').addEventListener('input', SetNewMaxValues);
@@ -99,6 +101,7 @@ document.getElementById('timerOption').addEventListener('change', SetNewMaxTime)
 eel.expose(updStatusText)
 function updStatusText(text) {
     document.getElementById("status-text").innerText = text;
+    console.log(text)
 }
 
 eel.expose(updStatus)
@@ -121,4 +124,18 @@ function notConnected() {
 eel.expose(stopEngine)
 function stopEngine() {
     stop()    
+}
+
+eel.expose(newTimePassed)
+function newTimePassed(time) {
+    unit = 's'
+    if (time > 60) {
+        time = (time / 60).toFixed(2);
+        unit = 'min';
+        if (time>60){
+            time = (time / 60).toFixed(2);
+            unit = 'hour(s)';
+        }
+    }
+    document.getElementById('PassedTime').innerText = time + unit;
 }

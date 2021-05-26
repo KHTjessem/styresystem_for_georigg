@@ -11,12 +11,14 @@ var lightMotor = document.getElementById("light")
 
 function hideStatus() {
     positionPanel.style.display = "none";
-    velocityPanel.style.display = "flex";      
+    velocityPanel.style.display = "flex";
+    eel.newPdiv(9);
 
 } 
 function hidePosition(){
     velocityPanel.style.display = "none";
-    positionPanel.style.display = "flex"
+    positionPanel.style.display = "flex";
+    eel.newPdiv(3);
 }
 
 function hide(){

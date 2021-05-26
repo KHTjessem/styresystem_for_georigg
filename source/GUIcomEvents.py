@@ -10,6 +10,7 @@ class eventsList:
         self.evs.updatePosition += self.updPosition
         self.evs.notConneted += self.notConneted
         self.evs.stopEngineEEL += self.stopEngine
+        self.evs.newTime += self.timePassed
 
     def notConneted(self):
         """Fire when engine is no longer connected"""
@@ -32,6 +33,9 @@ class eventsList:
         Usefull to navigate around threads"""
         self.eel.stopEngine()
 
+    def timePassed(self, time):
+        """Update the time passed display"""
+        self.eel.newTimePassed(time)
 
 StatusDict = {
     # self defined
@@ -42,9 +46,10 @@ StatusDict = {
     333: [30, 'Something went wrong'],
 
     # Based on Command number from TMCL firmware manual 1.42.
-    1: [20, 'Extending'],
-    2: [20, 'Contracting'],
+    1: [20, 'Contracting'],
+    2: [20, 'Extending'],
     3: [10, 'Stopped'],
     4: [20, 'Moving to new position'],
-    5: [20, 'Moving to home position']
+    5: [20, 'Moving to home position'],
+    6: [10, 'Updated position']
 }
